@@ -145,12 +145,13 @@ export default function JobDetails() {
       <div className="w-full max-w-md min-h-screen bg-[#F7F8F8]">
 
         {/* Header */}
-        <div className="bg-white px-5 pt-7 pb-5 border-b border-gray-100">
+        <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-gray-100">
+          <div className="px-5 pt-7 pb-5">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => navigate("/worker/job-requests")}
-              className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-700"
+              className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-[#E5E7EB] transition active:scale-95"
             >
               <ArrowLeft size={19} />
             </button>
@@ -167,6 +168,7 @@ export default function JobDetails() {
             <span className="px-2.5 py-1 rounded-full bg-orange-50 text-[#FF5A00] text-[10px] font-bold capitalize">
               {booking.status}
             </span>
+          </div>
           </div>
         </div>
 

@@ -5,8 +5,8 @@ import {
   BriefcaseBusiness,
   CalendarDays,
   Car,
+  CheckCircle2,
   ChevronRight,
-  Clock3,
   Droplets,
   Hammer,
   Home as HomeIcon,
@@ -115,8 +115,8 @@ export default function Home() {
     : null;
 
   return (
-    <main className="min-h-screen w-full bg-[#F9FAFB] flex justify-center">
-      <div className="relative flex min-h-screen w-full max-w-[430px] flex-col bg-[#F9FAFB]">
+    <main className="min-h-screen w-full bg-[#F7F8F8] flex justify-center">
+      <div className="relative flex min-h-screen w-full max-w-[430px] flex-col bg-[#F7F8F8]">
         {/* ================= HEADER ================= */}
         <header className="px-5 pb-3 pt-7">
           <div className="flex items-center justify-between">
@@ -379,9 +379,7 @@ export default function Home() {
                     key={worker.id}
                     onClick={() => navigate(`/customer/worker/${worker.id}`)}
                     className="
-                      flex
                       w-full
-                      gap-3
                       rounded-[16px]
                       border
                       border-[#E5E7EB]
@@ -393,92 +391,150 @@ export default function Home() {
                       active:scale-[0.99]
                     "
                   >
-                    {/* Worker Image */}
-                    <div className="relative shrink-0">
-                      <img
-                        src={
-                          worker.image ||
-                          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=85"
-                        }
-                        alt={worker.name}
-                        className="h-[76px] w-[76px] rounded-[13px] object-cover"
-                      />
+                    <div className="flex gap-3">
 
-                      {worker.verified && (
-                        <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#16A34A]">
-                          <ShieldCheck
-                            size={11}
-                            className="text-white"
+                      {/* Worker Image */}
+                      <div className="relative shrink-0">
+                        {worker.image ? (
+                          <img
+                            src={worker.image}
+                            alt={worker.name}
+                            className="h-[78px] w-[78px] rounded-[13px] object-cover"
                           />
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Worker Info */}
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <h3 className="truncate text-[13px] font-bold text-[#111827]">
-                            {worker.name}
-                          </h3>
-
-                          <p className="mt-0.5 text-[11px] text-[#6B7280]">
-                            {worker.service}
-                          </p>
-                        </div>
+                        ) : (
+                          <div className="flex h-[78px] w-[78px] items-center justify-center rounded-[13px] bg-[#E6F7F5]">
+                            <UserRound
+                              size={30}
+                              className="text-[#087F7A]"
+                            />
+                          </div>
+                        )}
 
                         {worker.verified && (
-                          <span className="shrink-0 rounded-full bg-[#E6F7F5] px-2 py-1 text-[9px] font-semibold text-[#087F7A]">
-                            Verified
-                          </span>
+                          <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#16A34A]">
+                            <ShieldCheck
+                              size={11}
+                              className="text-white"
+                            />
+                          </div>
                         )}
                       </div>
 
-                      <div className="mt-2 flex items-center gap-2">
-                        <div className="flex items-center gap-1">
-                          {worker.reviews > 0 ? (
-                            <>
-                              <Star
-                                size={12}
-                                fill="#F59E0B"
-                                className="text-[#F59E0B]"
-                              />
-                              <span className="text-[10px] font-semibold text-[#374151]">
-                                {worker.rating.toFixed(1)}
-                              </span>
-                              <span className="text-[9px] text-[#9CA3AF]">
-                                ({worker.reviews})
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-[10px] font-medium text-[#6B7280]">
-                              No reviews yet
+                      {/* Worker Info */}
+                      <div className="min-w-0 flex-1">
+
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <h3 className="truncate text-[13px] font-bold text-[#111827]">
+                              {worker.name}
+                            </h3>
+
+                            <p className="mt-0.5 text-[10px] text-[#6B7280]">
+                              {worker.service}
+                            </p>
+                          </div>
+
+                          {worker.verified && (
+                            <span
+                              className="
+                                flex
+                                shrink-0
+                                items-center
+                                gap-1
+                                rounded-full
+                                bg-[#E6F7F5]
+                                px-2
+                                py-1
+                                text-[8px]
+                                font-semibold
+                                text-[#087F7A]
+                              "
+                            >
+                              <CheckCircle2 size={10} />
+                              Verified
                             </span>
                           )}
                         </div>
 
-                        <span className="h-3 w-px bg-[#E5E7EB]" />
+                        {/* Rating */}
+                        <div className="mt-2 flex items-center gap-1.5">
+                          <Star
+                            size={12}
+                            fill="#F59E0B"
+                            className="text-[#F59E0B]"
+                          />
 
-                        <span className="text-[9px] text-[#6B7280]">
-                          {worker.experience}
-                        </span>
-                      </div>
+                          <span className="text-[10px] font-bold text-[#374151]">
+                            {worker.rating > 0
+                              ? worker.rating.toFixed(1)
+                              : "New"}
+                          </span>
 
-                      <div className="mt-2 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                          <span className="text-[9px] text-[#9CA3AF]">
+                            {worker.reviews > 0
+                              ? `(${worker.reviews} reviews)`
+                              : "(No reviews yet)"}
+                          </span>
+                        </div>
+
+                        {/* Location + experience */}
+                        <div className="mt-2 flex items-center gap-3">
                           <span className="flex items-center gap-1 text-[9px] text-[#6B7280]">
                             <MapPin size={11} />
                             {worker.city || "Nearby"}
                           </span>
 
-                          <span className="flex items-center gap-1 text-[9px] text-[#6B7280]">
-                            <Clock3 size={11} />
-                            {worker.available ? "Available" : "Offline"}
+                          <span className="text-[9px] text-[#6B7280]">
+                            {worker.experience}
                           </span>
                         </div>
+                      </div>
+                    </div>
 
+                    {/* Bottom row */}
+                    <div className="mt-3 flex items-center justify-between border-t border-[#F3F4F6] pt-3">
+
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`
+                            h-1.5
+                            w-1.5
+                            rounded-full
+                            ${
+                              worker.available
+                                ? "bg-[#16A34A]"
+                                : "bg-[#9CA3AF]"
+                            }
+                          `}
+                        />
+
+                        <span
+                          className={`
+                            text-[9px]
+                            font-medium
+                            ${
+                              worker.available
+                                ? "text-[#16A34A]"
+                                : "text-[#9CA3AF]"
+                            }
+                          `}
+                        >
+                          {worker.available
+                            ? "Available now"
+                            : "Currently unavailable"}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3">
                         <span className="text-[12px] font-bold text-[#111827]">
                           {worker.price}
+                        </span>
+
+                        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FFF1E8]">
+                          <ChevronRight
+                            size={15}
+                            className="text-[#FF5A00]"
+                          />
                         </span>
                       </div>
                     </div>
@@ -517,46 +573,6 @@ export default function Home() {
   );
 }
 
-/* ================= NAV ITEM ================= */
-
-interface NavItemProps {
-  icon: React.ElementType;
-  label: string;
-  active?: boolean;
-  onClick: () => void;
-}
-
-function NavItem({
-  icon: Icon,
-  label,
-  active = false,
-  onClick,
-}: NavItemProps) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex flex-col items-center gap-1"
-    >
-      <Icon
-        size={20}
-        strokeWidth={active ? 2.2 : 1.8}
-        className={
-          active ? "text-[#FF5A00]" : "text-[#9CA3AF]"
-        }
-      />
-
-      <span
-        className={`text-[9px] font-medium ${
-          active ? "text-[#FF5A00]" : "text-[#9CA3AF]"
-        }`}
-      >
-        {label}
-      </span>
-    </button>
-  );
-}
-
-/* ================= CUSTOM ICONS ================= */
 
 function ZapIcon({
   size = 20,

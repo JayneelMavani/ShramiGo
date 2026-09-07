@@ -32,7 +32,7 @@ export function BottomNavigation({ role }: { role: 'customer' | 'worker' }) {
             className={({ isActive }) => 
               `flex flex-col items-center justify-center flex-1 h-full py-1 text-[11px] font-medium transition-all duration-200 ${
                 isActive 
-                  ? 'text-[#087F7A] font-semibold scale-105' 
+                  ? 'text-[#FF5A00] font-semibold' 
                   : 'text-gray-500 hover:text-gray-900'
               }`
             }
