@@ -1,6 +1,6 @@
-# ShramSetu Monorepo
+# ShramiGo Monorepo
 
-ShramSetu is a cooperative service marketplace connecting customers with workers and supporting end-to-end booking, payment, and service completion. 
+ShramiGo is a cooperative service marketplace connecting customers with workers and supporting end-to-end booking, payment, and service completion. 
 
 This repository has been restructured into a **pnpm monorepo** to support future scaling and feature-based packages. 
 
@@ -13,7 +13,7 @@ Currently, the core applications are:
 ## Repository Structure
 
 ```text
-shramsetu/
+shramigo/
 ├── apps/
 │   ├── web/           # React frontend
 │   └── api/           # Python/FastAPI backend
