@@ -1,22 +1,32 @@
-import { BarChart3, BriefcaseBusiness, CalendarDays, Home, Search, UserRound } from 'lucide-react'
+import { BarChart3, BriefcaseBusiness, CalendarDays, Home, Plus, Search, UserRound } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 
-const customerItems = [
-  ['Home', '/customer', Home],
-  ['Search', '/customer/search', Search],
-  ['Bookings', '/customer/bookings', CalendarDays],
-  ['Profile', '/customer/profile', UserRound]
-] as const
+interface NavItem {
+  label: string
+  path: string
+  icon: React.ElementType
+  isCenter?: boolean
+  end?: boolean
+}
 
-const workerItems = [
-  ['Home', '/worker', Home],
-  ['Jobs', '/worker/job-requests', BriefcaseBusiness],
-  ['Earnings', '/worker/earnings', BarChart3],
-  ['Profile', '/worker/profile', UserRound]
-] as const
+const customerItems: NavItem[] = [
+  { label: 'Home', path: '/customer', icon: Home, end: true },
+  { label: 'Search', path: '/customer/search', icon: Search },
+  { label: 'Bookings', path: '/customer/bookings', icon: CalendarDays },
+  { label: 'Profile', path: '/customer/profile', icon: UserRound }
+]
+
+const workerItems: NavItem[] = [
+  { label: 'Home', path: '/worker', icon: Home, end: true },
+  { label: 'Jobs', path: '/worker/job-requests', icon: BriefcaseBusiness },
+  { label: 'Add', path: '/worker/skills', icon: Plus, isCenter: true },
+  { label: 'Earnings', path: '/worker/earnings', icon: BarChart3 },
+  { label: 'Profile', path: '/worker/profile', icon: UserRound }
+]
 
 export function BottomNavigation({ role }: { role: 'customer' | 'worker' }) {
   const items = role === 'customer' ? customerItems : workerItems
+  const activeColorClass = role === 'worker' ? 'text-[#087F7A]' : 'text-[#FF5A00]'
 
   return (
     <nav 
@@ -24,23 +34,45 @@ export function BottomNavigation({ role }: { role: 'customer' | 'worker' }) {
       aria-label={`${role} navigation`}
     >
       <div className="max-w-md mx-auto flex items-center justify-around h-16 px-2">
-        {items.map(([label, path, Icon]) => (
-          <NavLink 
-            key={label} 
-            to={path} 
-            end={label === 'Home'}
-            className={({ isActive }) => 
-              `flex flex-col items-center justify-center flex-1 h-full py-1 text-[11px] font-medium transition-all duration-200 ${
-                isActive 
-                  ? 'text-[#FF5A00] font-semibold' 
-                  : 'text-gray-500 hover:text-gray-900'
-              }`
-            }
-          >
-            <Icon size={20} className="mb-0.5" />
-            <span>{label}</span>
-          </NavLink>
-        ))}
+        {items.map((item) => {
+          const Icon = item.icon
+
+          if (item.isCenter) {
+            return (
+              <NavLink
+                key={item.label}
+                to={item.path}
+                className="flex flex-col items-center justify-center flex-1 h-full relative -top-3"
+                title="Add Skills & Services"
+              >
+                <div className="w-12 h-12 rounded-full bg-[#087F7A] text-white flex items-center justify-center shadow-lg shadow-teal-700/30 hover:bg-[#066C68] transition-transform active:scale-95">
+                  <Plus size={24} strokeWidth={2.5} />
+                </div>
+                <span className="text-[10px] font-semibold text-[#087F7A] mt-0.5">
+                  {item.label}
+                </span>
+              </NavLink>
+            )
+          }
+
+          return (
+            <NavLink 
+              key={item.label} 
+              to={item.path} 
+              end={item.end}
+              className={({ isActive }) => 
+                `flex flex-col items-center justify-center flex-1 h-full py-1 text-[11px] font-medium transition-all duration-200 ${
+                  isActive 
+                    ? `${activeColorClass} font-semibold` 
+                    : 'text-gray-500 hover:text-gray-900'
+                }`
+              }
+            >
+              <Icon size={20} className="mb-0.5" />
+              <span>{item.label}</span>
+            </NavLink>
+          )
+        })}
       </div>
     </nav>
   )
