@@ -13,6 +13,7 @@ import {
   Wallet,
   XCircle,
 } from "lucide-react";
+import AdminSidebar from "../../components/admin/AdminSidebar";
 
 type NotificationType =
   | "worker"
@@ -147,16 +148,17 @@ function getNotificationStyle(type: NotificationType) {
       return "bg-purple-50 text-purple-600";
 
     case "cancelled":
-      return "bg-gray-100 text-gray-600";
+      return "bg-gray-100 dark:bg-[#26332F] text-gray-600 dark:text-[#C8C0B4]";
 
     default:
-      return "bg-gray-50 text-gray-600";
+      return "bg-gray-50 dark:bg-[#1C2825] text-gray-600 dark:text-[#C8C0B4]";
   }
 }
 
 export default function Notifications() {
   const navigate = useNavigate();
   const [allRead, setAllRead] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const unreadCount = notifications.filter(
     (notification) => notification.unread && !allRead
@@ -173,18 +175,19 @@ export default function Notifications() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F7F8F8] px-4 py-6 sm:px-6">
-      <div className="mx-auto min-h-screen max-w-2xl overflow-hidden bg-white shadow-xl sm:min-h-[760px] sm:rounded-[32px]">
+    <div className="min-h-screen bg-[#F7F8F8] dark:bg-[#101A18] px-4 py-6 sm:px-6">
+      <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div className="mx-auto min-h-screen max-w-2xl overflow-hidden bg-white dark:bg-[#1C2825] shadow-xl sm:min-h-[760px] sm:rounded-[32px]">
 
         {/* Header */}
-        <div className="sticky top-0 z-10 border-b border-gray-100 bg-white px-5 pb-5 pt-6 sm:px-7">
+        <div className="sticky top-0 z-10 border-b border-gray-100 dark:border-[#3D4944] bg-white dark:bg-[#1C2825] px-5 pb-5 pt-6 sm:px-7">
           <div className="flex items-center justify-between gap-4">
 
             <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={() => navigate(-1)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-50 text-gray-700 transition hover:bg-gray-100"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-50 dark:bg-[#1C2825] text-gray-700 dark:text-[#C8C0B4] transition hover:bg-gray-100 dark:hover:bg-[#3D3931] dark:bg-[#26332F]"
                 aria-label="Go back"
               >
                 <ArrowLeft size={20} />
@@ -192,7 +195,7 @@ export default function Notifications() {
 
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl font-bold text-gray-900">
+                  <h1 className="text-xl font-bold text-gray-900 dark:text-[#F7F2E8]">
                     Notifications
                   </h1>
 
@@ -203,7 +206,7 @@ export default function Notifications() {
                   )}
                 </div>
 
-                <p className="mt-0.5 text-xs text-gray-500">
+                <p className="mt-0.5 text-xs text-gray-500 dark:text-[#9A9185]">
                   Platform activity and alerts
                 </p>
               </div>
@@ -212,6 +215,10 @@ export default function Notifications() {
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-[#087F7A]">
               <BellRing size={20} />
             </div>
+
+            <button type="button" onClick={() => setSidebarOpen(true)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-50 dark:bg-[#26332F] text-gray-600 dark:text-[#C8C0B4] hover:bg-gray-100 dark:hover:bg-[#3D4944] transition" title="Menu">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
           </div>
 
           {/* Mark all as read */}
@@ -268,15 +275,15 @@ export default function Notifications() {
           {/* Empty State */}
           {notifications.length === 0 && (
             <div className="flex min-h-[500px] flex-col items-center justify-center px-8 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-50">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-50 dark:bg-[#1C2825]">
                 <Bell size={28} className="text-gray-300" />
               </div>
 
-              <h2 className="mt-5 text-lg font-bold text-gray-900">
+              <h2 className="mt-5 text-lg font-bold text-gray-900 dark:text-[#F7F2E8]">
                 No notifications yet
               </h2>
 
-              <p className="mt-2 max-w-sm text-sm leading-5 text-gray-500">
+              <p className="mt-2 max-w-sm text-sm leading-5 text-gray-500 dark:text-[#9A9185]">
                 Platform activity, worker registrations, bookings and
                 important alerts will appear here.
               </p>
@@ -292,7 +299,7 @@ export default function Notifications() {
           )}
         </div>
 
-        <div className="h-5 bg-white" />
+        <div className="h-5 bg-white dark:bg-[#1C2825]" />
       </div>
     </div>
   );
@@ -343,7 +350,7 @@ function NotificationCard({
       className={`relative flex w-full items-start gap-3 rounded-2xl border p-4 text-left transition-all ${
         notification.unread
           ? "border-teal-100 bg-teal-50/40 hover:border-teal-200"
-          : "border-gray-100 bg-white hover:bg-gray-50"
+          : "border-gray-100 dark:border-[#3D4944] bg-white dark:bg-[#1C2825] hover:bg-gray-50 dark:hover:bg-[#3D3931] dark:bg-[#1C2825]"
       }`}
     >
       {/* Icon */}
@@ -356,7 +363,7 @@ function NotificationCard({
       {/* Content */}
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-sm font-bold text-gray-900">
+          <h3 className="text-sm font-bold text-gray-900 dark:text-[#F7F2E8]">
             {notification.title}
           </h3>
 
@@ -365,7 +372,7 @@ function NotificationCard({
           )}
         </div>
 
-        <p className="mt-1 text-xs leading-5 text-gray-500">
+        <p className="mt-1 text-xs leading-5 text-gray-500 dark:text-[#9A9185]">
           {notification.message}
         </p>
 

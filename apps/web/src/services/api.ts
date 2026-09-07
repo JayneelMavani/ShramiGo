@@ -1,5 +1,38 @@
-const configuredApiUrl = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "");
-const API_BASE_URL = configuredApiUrl || `${window.location.protocol}//${window.location.hostname}:8000`;
+function resolveApiBaseUrl(): string {
+  const configured = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim();
+
+  // If running in browser and accessed via external host/IP (not localhost/127.0.0.1)
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname &&
+    window.location.hostname !== "localhost" &&
+    window.location.hostname !== "127.0.0.1"
+  ) {
+    // If configured to localhost/127.0.0.1, rewrite host to current hostname so remote devices reach the backend
+    if (configured) {
+      try {
+        const url = new URL(configured);
+        if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
+          url.hostname = window.location.hostname;
+          return url.toString().replace(/\/$/, "");
+        }
+      } catch {
+        return configured
+          .replace("localhost", window.location.hostname)
+          .replace("127.0.0.1", window.location.hostname)
+          .replace(/\/$/, "");
+      }
+      return configured.replace(/\/$/, "");
+    }
+
+    // Default to empty string so requests use relative path (e.g. Vite dev proxy /api)
+    return "";
+  }
+
+  return configured ? configured.replace(/\/$/, "") : "";
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 /**
  * Converts any FastAPI error shape into a human-readable string.

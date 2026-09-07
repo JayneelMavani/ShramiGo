@@ -386,14 +386,14 @@ export default function Register() {
                 I agree to the{" "}
                 <button
                   type="button"
-                  className="font-medium text-[#FF5A00]"
+                  className="font-medium text-[#087F7A]"
                 >
                   Terms of Service
                 </button>{" "}
                 and{" "}
                 <button
                   type="button"
-                  className="font-medium text-[#FF5A00]"
+                  className="font-medium text-[#087F7A]"
                 >
                   Privacy Policy
                 </button>
@@ -450,7 +450,7 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={() => navigate("/customer/login")}
-                  className="font-semibold text-[#FF5A00]"
+                  className="font-semibold text-[#087F7A]"
                 >
                   Login
                 </button>

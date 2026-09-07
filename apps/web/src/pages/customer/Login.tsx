@@ -171,7 +171,7 @@ export default function Login() {
                     ? "Enter your phone number"
                     : "Enter your email address"
                 }
-                className="w-full rounded-xl border border-gray-200 bg-white h-[50px] pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#FF5A00] focus:ring-2 focus:ring-[#FF5A00]/10"
+                className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#FF5A00]"
                 required
               />
             </div>
@@ -182,7 +182,7 @@ export default function Login() {
             </label>
 
             <div className="relative">
-              <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#FF5A00]">
+              <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#087F7A]">
                 <Lock size={18} />
               </div>
 
@@ -191,7 +191,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full rounded-xl border border-gray-200 bg-white h-[50px] pl-11 pr-11 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#FF5A00] focus:ring-2 focus:ring-[#FF5A00]/10"
+                className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-11 pr-11 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A]"
                 required
               />
 
@@ -240,7 +240,7 @@ export default function Login() {
                 type="button"
                 onClick={() =>
                   setError(
-                    "Password reset is currently handled via support. Please contact support@shramigo.in for account recovery."
+                    "Password reset is currently handled via support. Please contact support@shramsetu.in for account recovery."
                   )
                 }
                 className="text-xs font-semibold text-[#FF5A00] hover:underline"
@@ -260,13 +260,13 @@ export default function Login() {
           </form>
 
           {/* Security */}
-          <div className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#FFF5F0] px-4 py-3">
+          <div className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#E9F7F6] px-4 py-3">
             <ShieldCheck
               size={17}
-              className="text-[#FF5A00]"
+              className="text-[#087F7A]"
             />
 
-            <p className="text-[10px] font-medium text-[#FF5A00]">
+            <p className="text-[10px] font-medium text-[#087F7A]">
               Your account and personal information are secure
             </p>
           </div>
@@ -287,7 +287,7 @@ export default function Login() {
           >
             <Phone
               size={17}
-              className="text-[#FF5A00]"
+              className="text-[#087F7A]"
             />
             Login with OTP
           </button>

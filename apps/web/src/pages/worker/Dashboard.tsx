@@ -18,7 +18,7 @@ import {
 import { BrandLogo } from "../../components/BrandLogo";
 import { getWorkerBookings, type Booking } from "../../services/bookings";
 import { getWorkerAvailability, type WorkerAvailability } from "../../services/worker";
-import { BottomNavigation } from "../../components/navigation/BottomNavigation";
+import { getUnreadCount } from "../../services/notifications";
 
 interface StoredUser {
   id: number;
@@ -38,6 +38,7 @@ export default function Dashboard() {
   const [workerName, setWorkerName] = useState("Worker");
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("shramigo_user");
@@ -56,11 +57,13 @@ export default function Dashboard() {
     async function loadData() {
       try {
         setLoading(true);
-        const [bookingsData, availData] = await Promise.all([
+        const [bookingsData, availData, count] = await Promise.all([
           getWorkerBookings().catch(() => []),
           getWorkerAvailability().catch(() => []),
+          getUnreadCount().catch(() => 0),
         ]);
         setBookings(bookingsData);
+        setUnreadCount(count);
         if (availData.length > 0) {
           const hasAvailableDay = availData.some((a) => a.is_available);
           setIsAvailable(hasAvailableDay);
@@ -157,7 +160,9 @@ export default function Dashboard() {
               className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white relative hover:bg-white/20 transition"
             >
               <Bell size={18} />
-              <span className="w-2 h-2 rounded-full bg-[#FF5A00] absolute top-2.5 right-2.5" />
+              {unreadCount > 0 && (
+                <span className="w-2 h-2 rounded-full bg-[#FF5A00] absolute top-2.5 right-2.5" />
+              )}
             </button>
 
           </div>
@@ -498,7 +503,72 @@ export default function Dashboard() {
         </div>
 
         {/* Bottom Navigation */}
-        <BottomNavigation role="worker" />
+        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-gray-100 px-3 py-3 z-40">
+          <div className="grid grid-cols-5 items-center">
+
+            <button
+              type="button"
+              onClick={() => navigate("/worker")}
+              className="flex flex-col items-center gap-1 text-[#087F7A]"
+            >
+              <BriefcaseBusiness size={20} />
+
+              <span className="text-[10px] font-semibold">
+                Home
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/worker/job-requests")}
+              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
+            >
+              <Search size={20} />
+
+              <span className="text-[10px]">
+                Jobs
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/worker/availability")}
+              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
+            >
+              <CalendarDays size={20} />
+
+              <span className="text-[10px]">
+                Schedule
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/worker/earnings")}
+              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
+            >
+              <Wallet size={20} />
+
+              <span className="text-[10px]">
+                Earnings
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/worker/profile")}
+              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
+            >
+              <Menu size={20} />
+
+              <span className="text-[10px]">
+                More
+              </span>
+            </button>
+
+          </div>
+        </nav>
+
       </div>
     </div>
   );

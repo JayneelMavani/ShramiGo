@@ -8,25 +8,23 @@ import {
   ClipboardList,
   IndianRupee,
   Loader2,
-  LogOut,
   Menu,
   TrendingUp,
-  UserRound,
   Users,
   XCircle,
-  X,
 } from "lucide-react";
 import { BrandLogo } from "../../components/BrandLogo";
+import AdminSidebar from "../../components/admin/AdminSidebar";
 import { getAdminStats, getAdminBookings, type AdminStats, type AdminBooking } from "../../services/admin";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [adminStats, setAdminStats] = useState<AdminStats | null>(null);
   const [recentBookings, setRecentBookings] = useState<AdminBooking[]>([]);
   const [loadingStats, setLoadingStats] = useState(true);
   const [loadError, setLoadError] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -76,15 +74,9 @@ export default function Dashboard() {
     },
   ];
 
-  const handleLogout = () => {
-    localStorage.removeItem("shramigo_token");
-    localStorage.removeItem("shramigo_user");
-    localStorage.removeItem("shramigo_refresh_token");
-    navigate("/role-selection");
-  };
-
   return (
-    <div className="min-h-screen bg-[#F7F8F8] text-gray-900 pb-8">
+    <div className="min-h-screen bg-[#F7F8F8] dark:bg-[#101A18] text-gray-900 dark:text-[#F7F2E8] pb-8">
+      <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
       <header className="bg-[#087F7A] text-white">
@@ -120,7 +112,7 @@ export default function Dashboard() {
               <button
                 type="button"
                 onClick={() => navigate("/admin/notifications")}
-                className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20"
+                className="w-10 h-10 rounded-xl bg-white dark:bg-[#1C2825]/10 flex items-center justify-center hover:bg-white dark:bg-[#1C2825]/20"
                 title="Notifications"
               >
                 <Bell size={20} />
@@ -128,11 +120,11 @@ export default function Dashboard() {
 
               <button
                 type="button"
-                onClick={() => setMenuOpen(true)}
-                className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-200 active:scale-95 group"
+                onClick={() => setSidebarOpen(true)}
+                className="w-10 h-10 rounded-xl bg-white dark:bg-[#1C2825]/10 flex items-center justify-center hover:bg-white dark:bg-[#1C2825]/20"
                 title="Menu"
               >
-                <Menu size={20} className="transition-transform duration-300 group-hover:rotate-90" />
+                <Menu size={20} />
               </button>
 
             </div>
@@ -151,7 +143,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-5 sm:px-8 -mt-5">
+      <main className="max-w-7xl mx-auto px-5 sm:px-8 py-7">
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -162,7 +154,7 @@ export default function Dashboard() {
             return (
               <div
                 key={stat.title}
-                className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"
+                className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] shadow-sm p-5"
               >
                 <div className="flex items-start justify-between">
 
@@ -178,7 +170,7 @@ export default function Dashboard() {
                   </span>
                 </div>
 
-                <p className="text-xs text-gray-500 mt-4">
+                <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-4">
                   {stat.title}
                 </p>
 
@@ -209,7 +201,7 @@ export default function Dashboard() {
 
             <button
               onClick={() => navigate("/admin/users")}
-              className="bg-white border border-gray-100 rounded-2xl p-5 text-left hover:border-[#087F7A]/30 transition"
+              className="bg-white dark:bg-[#1C2825] border border-gray-100 dark:border-[#3D4944] rounded-2xl p-5 text-left hover:border-[#087F7A]/30 transition"
             >
               <Users
                 size={23}
@@ -220,14 +212,14 @@ export default function Dashboard() {
                 Manage Users
               </p>
 
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1">
                 View customers and workers
               </p>
             </button>
 
             <button
               onClick={() => navigate("/admin/bookings")}
-              className="bg-white border border-gray-100 rounded-2xl p-5 text-left hover:border-[#087F7A]/30 transition"
+              className="bg-white dark:bg-[#1C2825] border border-gray-100 dark:border-[#3D4944] rounded-2xl p-5 text-left hover:border-[#087F7A]/30 transition"
             >
               <ClipboardList
                 size={23}
@@ -238,14 +230,14 @@ export default function Dashboard() {
                 Bookings
               </p>
 
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1">
                 Monitor all bookings
               </p>
             </button>
 
             <button
               onClick={() => navigate("/admin/workers")}
-              className="bg-white border border-gray-100 rounded-2xl p-5 text-left hover:border-[#087F7A]/30 transition"
+              className="bg-white dark:bg-[#1C2825] border border-gray-100 dark:border-[#3D4944] rounded-2xl p-5 text-left hover:border-[#087F7A]/30 transition"
             >
               <BriefcaseBusiness
                 size={23}
@@ -256,14 +248,14 @@ export default function Dashboard() {
                 Workers
               </p>
 
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1">
                 Verify and manage workers
               </p>
             </button>
 
             <button
               onClick={() => navigate("/admin/reports")}
-              className="bg-white border border-gray-100 rounded-2xl p-5 text-left hover:border-[#087F7A]/30 transition"
+              className="bg-white dark:bg-[#1C2825] border border-gray-100 dark:border-[#3D4944] rounded-2xl p-5 text-left hover:border-[#087F7A]/30 transition"
             >
               <TrendingUp
                 size={23}
@@ -274,7 +266,7 @@ export default function Dashboard() {
                 Reports
               </p>
 
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1">
                 Platform analytics
               </p>
             </button>
@@ -290,22 +282,22 @@ export default function Dashboard() {
               Platform Overview
             </h3>
 
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-500 dark:text-[#9A9185]">
               This Month
             </span>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-4">
 
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
+            <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-500">Completed Jobs</p>
+                <p className="text-sm text-gray-500 dark:text-[#9A9185]">Completed Jobs</p>
                 <CheckCircle2 size={19} className="text-green-600" />
               </div>
               <p className="text-2xl font-bold mt-3">
                 {adminStats?.completed_bookings ?? 0}
               </p>
-              <div className="h-2 bg-gray-100 rounded-full mt-4 overflow-hidden">
+              <div className="h-2 bg-gray-100 dark:bg-[#26332F] rounded-full mt-4 overflow-hidden">
                 <div
                   className="h-full bg-[#087F7A] rounded-full"
                   style={{
@@ -319,7 +311,7 @@ export default function Dashboard() {
                   }}
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-2">
                 {adminStats?.total_bookings
                   ? `${Math.round(
                       (adminStats.completed_bookings /
@@ -330,15 +322,15 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
+            <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-500">Pending Requests</p>
+                <p className="text-sm text-gray-500 dark:text-[#9A9185]">Pending Requests</p>
                 <XCircle size={19} className="text-[#FF5A00]" />
               </div>
               <p className="text-2xl font-bold mt-3">
                 {adminStats?.pending_bookings ?? 0}
               </p>
-              <div className="h-2 bg-gray-100 rounded-full mt-4 overflow-hidden">
+              <div className="h-2 bg-gray-100 dark:bg-[#26332F] rounded-full mt-4 overflow-hidden">
                 <div
                   className="h-full bg-[#FF5A00] rounded-full"
                   style={{
@@ -352,18 +344,18 @@ export default function Dashboard() {
                   }}
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-2">Requires attention</p>
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-2">Requires attention</p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
+            <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-500">Total Revenue</p>
+                <p className="text-sm text-gray-500 dark:text-[#9A9185]">Total Revenue</p>
                 <IndianRupee size={19} className="text-[#087F7A]" />
               </div>
               <p className="text-2xl font-bold mt-3">
                 ₹{adminStats?.total_revenue.toFixed(0) ?? 0}
               </p>
-              <p className="text-xs text-gray-500 mt-5">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-5">
                 From {adminStats?.completed_bookings ?? 0} paid bookings
               </p>
             </div>
@@ -388,11 +380,11 @@ export default function Dashboard() {
             </button>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] overflow-hidden">
 
             {recentBookings.length === 0 ? (
               <div className="p-8 text-center">
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-[#9A9185]">
                   {loadingStats ? "Loading bookings..." : "No bookings yet."}
                 </p>
               </div>
@@ -402,7 +394,7 @@ export default function Dashboard() {
                   key={booking.id}
                   className={`p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 ${
                     index !== recentBookings.length - 1
-                      ? "border-b border-gray-100"
+                      ? "border-b border-gray-100 dark:border-[#3D4944]"
                       : ""
                   }`}
                 >
@@ -413,7 +405,7 @@ export default function Dashboard() {
 
                     <div>
                       <p className="font-semibold">Booking #{booking.id}</p>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1">
                         {booking.customer_name} → {booking.worker_name}
                       </p>
                       <p className="text-xs text-gray-400 mt-1">
@@ -447,47 +439,6 @@ export default function Dashboard() {
 
         </section>
 
-        {/* Admin Account */}
-        <section className="mt-7">
-
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-
-            <div className="flex items-center justify-between">
-
-              <div className="flex items-center gap-4">
-
-                <div className="w-12 h-12 rounded-full bg-[#087F7A]/10 flex items-center justify-center">
-                  <UserRound
-                    size={23}
-                    className="text-[#087F7A]"
-                  />
-                </div>
-
-                <div>
-                  <p className="font-semibold">
-                    Administrator
-                  </p>
-
-                  <p className="text-xs text-gray-500 mt-1">
-                    Platform Administrator
-                  </p>
-                </div>
-
-              </div>
-
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-50 text-red-600 text-sm font-medium hover:bg-red-100"
-              >
-                <LogOut size={17} />
-                Logout
-              </button>
-
-            </div>
-
-          </div>
-        </section>
-
         {/* Footer */}
         <footer className="text-center py-8">
           <p className="text-xs text-gray-400">
@@ -496,119 +447,6 @@ export default function Dashboard() {
         </footer>
 
       </main>
-
-      {/* Admin Menu Drawer Overlay */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-50 flex">
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/50 animate-fade-in"
-            onClick={() => setMenuOpen(false)}
-          />
-
-          {/* Drawer Content */}
-          <div className="relative ml-auto flex h-full w-full max-w-xs flex-col bg-white p-6 shadow-2xl z-10 animate-slide-in-right">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-4">
-              <div className="flex items-center gap-2">
-                <BrandLogo size="sm" />
-                <span className="font-bold text-gray-900">Admin Menu</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            <nav className="mt-6 flex-1 space-y-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  navigate("/admin");
-                }}
-                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
-              >
-                <TrendingUp size={18} className="text-[#087F7A]" />
-                Dashboard
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  navigate("/admin/users");
-                }}
-                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
-              >
-                <Users size={18} className="text-[#087F7A]" />
-                Manage Users
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  navigate("/admin/workers");
-                }}
-                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
-              >
-                <BriefcaseBusiness size={18} className="text-[#087F7A]" />
-                Manage Workers
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  navigate("/admin/bookings");
-                }}
-                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
-              >
-                <ClipboardList size={18} className="text-[#FF5A00]" />
-                Bookings
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  navigate("/admin/reports");
-                }}
-                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
-              >
-                <TrendingUp size={18} className="text-[#FF5A00]" />
-                Reports & Analytics
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  navigate("/admin/notifications");
-                }}
-                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
-              >
-                <Bell size={18} className="text-[#087F7A]" />
-                Notifications
-              </button>
-            </nav>
-
-            <div className="border-t border-gray-100 pt-4">
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50"
-              >
-                <LogOut size={18} />
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -14,8 +14,10 @@ import {
   UserRound,
   X,
   XCircle,
+  Loader2,
 } from "lucide-react";
-import { getAdminWorkers } from "../../services/admin";
+import { getAdminWorkers, toggleWorkerVerified } from "../../services/admin";
+import AdminSidebar from "../../components/admin/AdminSidebar";
 
 type WorkerStatus = "Verified" | "Pending" | "Suspended";
 
@@ -34,6 +36,7 @@ const workers: Worker[] = [];
 
 export default function Workers() {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<
@@ -44,12 +47,13 @@ export default function Workers() {
   const [workerList, setWorkerList] = useState<Worker[]>(workers);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [toggling, setToggling] = useState(false);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        setLoading(true);
-        setLoadError("");
+  async function load() {
+    try {
+      setLoading(true);
+      setLoadError("");
         const data = await getAdminWorkers(0, 100);
         setWorkerList(
             data.map((w: any) => ({
@@ -72,9 +76,31 @@ export default function Workers() {
       } finally {
         setLoading(false);
       }
-    }
-    load();
+  }
+
+  useEffect(() => {
+    void load();
   }, []);
+
+  async function handleToggleVerification(worker: Worker) {
+    if (worker.status === "Verified") {
+      alert("Worker is already verified.");
+      return;
+    }
+    
+    try {
+      setToggling(true);
+      setActionError("");
+      const realId = parseInt(worker.id.replace("WRK", ""));
+      await toggleWorkerVerified(realId);
+      await load();
+      setSelectedWorker(null);
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : "Failed to verify worker.");
+    } finally {
+      setToggling(false);
+    }
+  }
 
   const filteredWorkers = useMemo(() => {
     return workerList.filter((worker) => {
@@ -94,16 +120,19 @@ export default function Workers() {
   }, [workerList, search, filter]);
 
   return (
-    <div className="min-h-screen bg-[#F7F8F8] text-gray-900">
+    <div className="min-h-screen bg-[#F7F8F8] dark:bg-[#101A18] text-gray-900 dark:text-[#F7F2E8]">
+      <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
       <header className="bg-[#087F7A] text-white">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 py-5">
 
+          <div className="flex items-center justify-between">
+
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate("/admin")}
-              className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20"
+              className="w-10 h-10 rounded-xl bg-white dark:bg-[#1C2825]/10 flex items-center justify-center hover:bg-white dark:bg-[#1C2825]/20"
             >
               <ArrowLeft size={20} />
             </button>
@@ -119,6 +148,12 @@ export default function Workers() {
             </div>
           </div>
 
+          <button type="button" onClick={() => setSidebarOpen(true)} className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20" title="Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+
+          </div>
+
         </div>
       </header>
 
@@ -129,7 +164,7 @@ export default function Workers() {
         {/* Summary */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
 
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
             <div className="w-10 h-10 rounded-xl bg-[#087F7A]/10 flex items-center justify-center">
               <BriefcaseBusiness
                 size={20}
@@ -137,7 +172,7 @@ export default function Workers() {
               />
             </div>
 
-            <p className="text-xs text-gray-500 mt-4">
+            <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-4">
               Total Workers
             </p>
 
@@ -146,7 +181,7 @@ export default function Workers() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
             <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
               <CheckCircle2
                 size={20}
@@ -154,7 +189,7 @@ export default function Workers() {
               />
             </div>
 
-            <p className="text-xs text-gray-500 mt-4">
+            <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-4">
               Verified
             </p>
 
@@ -163,7 +198,7 @@ export default function Workers() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
             <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
               <Filter
                 size={20}
@@ -171,7 +206,7 @@ export default function Workers() {
               />
             </div>
 
-            <p className="text-xs text-gray-500 mt-4">
+            <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-4">
               Pending Verification
             </p>
 
@@ -180,7 +215,7 @@ export default function Workers() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
             <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
               <XCircle
                 size={20}
@@ -188,7 +223,7 @@ export default function Workers() {
               />
             </div>
 
-            <p className="text-xs text-gray-500 mt-4">
+            <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-4">
               Suspended
             </p>
 
@@ -200,7 +235,7 @@ export default function Workers() {
         </div>
 
         {/* Search / Filters */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 mb-5">
+        <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-4 mb-5">
 
           <div className="flex flex-col lg:flex-row gap-4">
 
@@ -214,7 +249,7 @@ export default function Workers() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search worker, service, location..."
-                className="w-full h-11 pl-11 pr-4 rounded-xl bg-gray-50 border border-gray-200 outline-none focus:border-[#087F7A] text-sm"
+                className="w-full h-11 pl-11 pr-4 rounded-xl bg-gray-50 dark:bg-[#1C2825] border border-gray-200 dark:border-[#2C3834] outline-none focus:border-[#087F7A] text-sm"
               />
             </div>
 
@@ -228,7 +263,7 @@ export default function Workers() {
                   className={`px-4 py-2.5 rounded-xl text-sm font-medium transition ${
                     filter === item
                       ? "bg-[#087F7A] text-white"
-                      : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                      : "bg-gray-50 dark:bg-[#1C2825] text-gray-600 dark:text-[#C8C0B4] hover:bg-gray-100 dark:hover:bg-[#3D3931] dark:bg-[#26332F]"
                   }`}
                 >
                   {item}
@@ -241,16 +276,16 @@ export default function Workers() {
         </div>
 
         {/* Worker List */}
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+        <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] overflow-hidden">
 
-          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+          <div className="px-5 py-4 border-b border-gray-100 dark:border-[#3D4944] flex items-center justify-between">
 
             <div>
               <h2 className="font-bold">
                 Registered Workers
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1">
                 {filteredWorkers.length} workers displayed
               </p>
             </div>
@@ -268,29 +303,29 @@ export default function Workers() {
             <table className="w-full">
 
               <thead>
-                <tr className="bg-gray-50 text-left">
+                <tr className="bg-gray-50 dark:bg-[#1C2825] text-left">
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Worker
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Service
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Location
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Rating
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Status
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Action
                   </th>
 
@@ -302,7 +337,7 @@ export default function Workers() {
                 {filteredWorkers.map((worker) => (
                   <tr
                     key={worker.id}
-                    className="border-t border-gray-100 hover:bg-gray-50/70"
+                    className="border-t border-gray-100 dark:border-[#3D4944] hover:bg-gray-50 dark:hover:bg-[#3D3931] dark:bg-[#1C2825]/70"
                   >
 
                     <td className="px-5 py-4">
@@ -342,7 +377,7 @@ export default function Workers() {
 
                     <td className="px-5 py-4">
 
-                      <div className="flex items-center gap-1.5 text-sm text-gray-600">
+                      <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-[#C8C0B4]">
                         <MapPin size={15} />
                         {worker.location}
                       </div>
@@ -524,7 +559,7 @@ export default function Workers() {
       {selectedWorker && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
 
-          <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-6">
+          <div className="w-full max-w-md bg-white dark:bg-[#1C2825] rounded-3xl shadow-xl p-6">
 
             <div className="flex items-center justify-between">
 
@@ -534,7 +569,7 @@ export default function Workers() {
 
               <button
                 onClick={() => setSelectedWorker(null)}
-                className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center"
+                className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-[#26332F] flex items-center justify-center"
               >
                 <X size={18} />
               </button>
@@ -556,7 +591,7 @@ export default function Workers() {
                   {selectedWorker.name}
                 </h3>
 
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-500 dark:text-[#9A9185] mt-1">
                   {selectedWorker.service}
                 </p>
 
@@ -605,7 +640,7 @@ export default function Workers() {
             </div>
 
             {/* Verification Documents */}
-            <div className="mt-6 p-4 rounded-2xl bg-gray-50">
+            <div className="mt-6 p-4 rounded-2xl bg-gray-50 dark:bg-[#1C2825]">
 
               <div className="flex items-center gap-2">
                 <ShieldCheck
@@ -618,7 +653,7 @@ export default function Workers() {
                 </p>
               </div>
 
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-2">
                 Identity, skill and worker verification
                 documents can be reviewed here.
               </p>
@@ -626,24 +661,27 @@ export default function Workers() {
             </div>
 
             {/* Actions */}
-            <div className="grid grid-cols-2 gap-3 mt-6">
+            <div className="mt-6">
+              {actionError && <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{actionError}</div>}
+              
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => handleToggleVerification(selectedWorker)}
+                  disabled={toggling || selectedWorker.status === "Verified"}
+                  className="h-11 rounded-xl bg-green-600 text-white font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {toggling ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} />}
+                  Approve
+                </button>
 
-              <button
-                onClick={() => setSelectedWorker(null)}
-                className="h-11 rounded-xl bg-green-600 text-white font-semibold flex items-center justify-center gap-2"
-              >
-                <Check size={18} />
-                Approve
-              </button>
-
-              <button
-                onClick={() => setSelectedWorker(null)}
-                className="h-11 rounded-xl bg-red-50 text-red-600 font-semibold flex items-center justify-center gap-2"
-              >
-                <XCircle size={18} />
-                Reject
-              </button>
-
+                <button
+                  onClick={() => setSelectedWorker(null)}
+                  className="h-11 rounded-xl bg-red-50 text-red-600 font-semibold flex items-center justify-center gap-2"
+                >
+                  <XCircle size={18} />
+                  Reject
+                </button>
+              </div>
             </div>
 
           </div>

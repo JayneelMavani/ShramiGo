@@ -15,6 +15,7 @@ import {
   XCircle,
 } from "lucide-react";
 import { getAdminBookings, type AdminBooking } from "../../services/admin";
+import AdminSidebar from "../../components/admin/AdminSidebar";
 
 type BookingStatus =
   | "Completed"
@@ -38,6 +39,7 @@ const bookings: Booking[] = [];
 
 export default function Bookings() {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"All" | BookingStatus>("All");
@@ -102,16 +104,19 @@ export default function Bookings() {
   }, [bookingList, search, filter]);
 
   return (
-    <div className="min-h-screen bg-[#F7F8F8] text-gray-900">
+    <div className="min-h-screen bg-[#F7F8F8] dark:bg-[#101A18] text-gray-900 dark:text-[#F7F2E8]">
+      <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
       <header className="bg-[#087F7A] text-white">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 py-5">
 
+          <div className="flex items-center justify-between">
+
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate("/admin")}
-              className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20"
+              className="w-10 h-10 rounded-xl bg-white dark:bg-[#1C2825]/10 flex items-center justify-center hover:bg-white dark:bg-[#1C2825]/20"
             >
               <ArrowLeft size={20} />
             </button>
@@ -125,6 +130,12 @@ export default function Bookings() {
                 Booking Management
               </h1>
             </div>
+          </div>
+
+          <button type="button" onClick={() => setSidebarOpen(true)} className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20" title="Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+
           </div>
 
         </div>
@@ -170,7 +181,7 @@ export default function Bookings() {
         </div>
 
         {/* Search + Filters */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 mb-5">
+        <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-4 mb-5">
 
           <div className="flex flex-col lg:flex-row gap-4">
 
@@ -185,7 +196,7 @@ export default function Bookings() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search booking, customer, worker, service..."
-                className="w-full h-11 pl-11 pr-4 rounded-xl bg-gray-50 border border-gray-200 outline-none focus:border-[#087F7A] text-sm"
+                className="w-full h-11 pl-11 pr-4 rounded-xl bg-gray-50 dark:bg-[#1C2825] border border-gray-200 dark:border-[#2C3834] outline-none focus:border-[#087F7A] text-sm"
               />
 
             </div>
@@ -207,7 +218,7 @@ export default function Bookings() {
                   className={`px-4 py-2.5 rounded-xl text-sm font-medium transition ${
                     filter === item
                       ? "bg-[#087F7A] text-white"
-                      : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                      : "bg-gray-50 dark:bg-[#1C2825] text-gray-600 dark:text-[#C8C0B4] hover:bg-gray-100 dark:hover:bg-[#3D3931] dark:bg-[#26332F]"
                   }`}
                 >
                   {item}
@@ -221,16 +232,16 @@ export default function Bookings() {
         </div>
 
         {/* Booking List */}
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+        <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] overflow-hidden">
 
-          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+          <div className="px-5 py-4 border-b border-gray-100 dark:border-[#3D4944] flex items-center justify-between">
 
             <div>
               <h2 className="font-bold">
                 All Bookings
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1">
                 {filteredBookings.length} bookings displayed
               </p>
             </div>
@@ -248,37 +259,37 @@ export default function Bookings() {
             <table className="w-full">
 
               <thead>
-                <tr className="bg-gray-50 text-left">
+                <tr className="bg-gray-50 dark:bg-[#1C2825] text-left">
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Booking
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Customer
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Worker
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Service
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Schedule
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Amount
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Status
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Action
                   </th>
 
@@ -290,7 +301,7 @@ export default function Bookings() {
                 {filteredBookings.map((booking) => (
                   <tr
                     key={booking.id}
-                    className="border-t border-gray-100 hover:bg-gray-50/70"
+                    className="border-t border-gray-100 dark:border-[#3D4944] hover:bg-gray-50 dark:hover:bg-[#3D3931] dark:bg-[#1C2825]/70"
                   >
 
                     <td className="px-5 py-4">
@@ -385,7 +396,7 @@ export default function Bookings() {
                       {booking.id}
                     </p>
 
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500 dark:text-[#9A9185] mt-1">
                       {booking.service}
                     </p>
                   </div>
@@ -446,7 +457,7 @@ export default function Bookings() {
 
                 </div>
 
-                <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-4">
+                <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-[#9A9185] mt-4">
                   <MapPin size={14} />
                   {booking.location}
                 </div>
@@ -493,7 +504,7 @@ export default function Bookings() {
       {selectedBooking && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
 
-          <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-6 max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-md bg-white dark:bg-[#1C2825] rounded-3xl shadow-xl p-6 max-h-[90vh] overflow-y-auto">
 
             <div className="flex items-center justify-between">
 
@@ -509,7 +520,7 @@ export default function Bookings() {
 
               <button
                 onClick={() => setSelectedBooking(null)}
-                className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center"
+                className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-[#26332F] flex items-center justify-center"
               >
                 <X size={18} />
               </button>
@@ -528,7 +539,7 @@ export default function Bookings() {
 
               <div className="flex items-center gap-3">
 
-                <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center">
+                <div className="w-11 h-11 rounded-xl bg-white dark:bg-[#1C2825] flex items-center justify-center">
                   <ClipboardList
                     size={21}
                     className="text-[#087F7A]"
@@ -627,7 +638,7 @@ function SummaryCard({
   bgClass?: string;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-5">
+    <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
 
       <div
         className={`w-10 h-10 rounded-xl ${bgClass} flex items-center justify-center`}
@@ -635,7 +646,7 @@ function SummaryCard({
         <Icon size={20} className={iconClass} />
       </div>
 
-      <p className="text-xs text-gray-500 mt-4">
+      <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-4">
         {title}
       </p>
 
@@ -680,7 +691,7 @@ function InfoRow({
   return (
     <div className="flex items-center gap-3">
 
-      <div className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500">
+      <div className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-[#26332F] flex items-center justify-center text-gray-500 dark:text-[#9A9185]">
         {icon}
       </div>
 

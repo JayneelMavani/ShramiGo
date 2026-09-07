@@ -27,7 +27,6 @@ import {
 } from "../../services/profile";
 import { getMyBookings, type Booking } from "../../services/bookings";
 import { compressProfileImage } from "../../utils/profileImage";
-import { BottomNavigation } from "../../components/navigation/BottomNavigation";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -252,7 +251,7 @@ export default function Profile() {
               <div className="rounded-xl bg-gray-50 p-3 space-y-1.5">
                 <p>
                   <span className="font-semibold text-gray-900">Email:</span>{" "}
-                  support@shramigo.in
+                  support@shramsetu.in
                 </p>
                 <p>
                   <span className="font-semibold text-gray-900">Helpline:</span>{" "}
@@ -703,7 +702,36 @@ export default function Profile() {
         )}
 
         {/* Bottom Navigation */}
-        <BottomNavigation role="customer" />
+        <nav className="fixed bottom-0 left-1/2 z-40 flex w-full max-w-[430px] -translate-x-1/2 items-center justify-around border-t border-gray-100 bg-white px-4 py-3">
+          <button
+            onClick={() => navigate("/customer")}
+            className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
+          >
+            <Home size={21} />
+            <span className="text-[10px]">Home</span>
+          </button>
+
+          <button
+            onClick={() => navigate("/customer/search")}
+            className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
+          >
+            <Search size={21} />
+            <span className="text-[10px]">Search</span>
+          </button>
+
+          <button
+            onClick={() => navigate("/customer/bookings")}
+            className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
+          >
+            <CalendarDays size={21} />
+            <span className="text-[10px]">Bookings</span>
+          </button>
+
+          <button className="flex flex-col items-center gap-1 text-[#FF5A00]">
+            <User size={21} />
+            <span className="text-[10px] font-semibold">Profile</span>
+          </button>
+        </nav>
       </div>
     </div>
   );

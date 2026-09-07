@@ -44,20 +44,20 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F8F8] flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-[#F7F8F8] dark:bg-[#101A18] flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
 
         {/* Back */}
         <button
           onClick={() => navigate("/role-selection")}
-          className="flex items-center gap-2 text-sm text-gray-600 mb-6 hover:text-[#087F7A]"
+          className="flex items-center gap-2 text-sm text-gray-600 dark:text-[#C8C0B4] mb-6 hover:text-[#087F7A]"
         >
           <ArrowLeft size={18} />
           Back
         </button>
 
         {/* Card */}
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-7">
+        <div className="bg-white dark:bg-[#1C2825] rounded-3xl shadow-sm border border-gray-100 dark:border-[#3D4944] p-7">
 
           {/* Logo */}
           <div className="flex justify-center mb-5">
@@ -66,11 +66,11 @@ export default function Login() {
 
           {/* Heading */}
           <div className="text-center mb-7">
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-[#F7F2E8]">
               Admin Login
             </h1>
 
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-gray-500 dark:text-[#9A9185] mt-2">
               Secure access to the ShramiGo administration panel
             </p>
           </div>
@@ -85,7 +85,7 @@ export default function Login() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-[#C8C0B4] mb-2">
                 Admin Email
               </label>
 
@@ -102,14 +102,14 @@ export default function Login() {
                   placeholder="admin@shramigo.com"
                   required
                   disabled={loading}
-                  className="w-full h-[50px] pl-11 pr-4 rounded-xl border border-gray-200 bg-white text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10"
+                  className="w-full h-12 pl-11 pr-4 rounded-xl border border-gray-200 dark:border-[#2C3834] bg-gray-50 dark:bg-[#1C2825] outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 text-sm"
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-[#C8C0B4] mb-2">
                 Password
               </label>
 
@@ -125,13 +125,13 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
                   required
-                  className="w-full h-[50px] pl-11 pr-12 rounded-xl border border-gray-200 bg-white text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10"
+                  className="w-full h-12 pl-11 pr-12 rounded-xl border border-gray-200 dark:border-[#2C3834] bg-gray-50 dark:bg-[#1C2825] outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 text-sm"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-[#C8C0B4]"
                 >
                   {showPassword ? (
                     <EyeOff size={19} />
@@ -171,11 +171,11 @@ export default function Login() {
             />
 
             <div>
-              <p className="text-sm font-semibold text-gray-800">
+              <p className="text-sm font-semibold text-gray-800 dark:text-[#F7F2E8]">
                 Secure Access
               </p>
 
-              <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1 leading-relaxed">
                 This portal is restricted to authorized ShramiGo
                 administrators.
               </p>

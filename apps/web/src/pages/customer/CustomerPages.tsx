@@ -14,7 +14,6 @@ import {
   User,
   Wallet,
 } from "lucide-react";
-import { BottomNavigation } from "../../components/navigation/BottomNavigation";
 
 export default function CustomerPages() {
   const navigate = useNavigate();
@@ -263,7 +262,44 @@ export default function CustomerPages() {
         </main>
 
         {/* Bottom Navigation */}
-        <BottomNavigation role="customer" />
+        <nav className="fixed bottom-0 left-1/2 z-50 flex w-full max-w-[430px] -translate-x-1/2 items-center justify-around border-t border-gray-100 bg-white px-4 py-3">
+          <button
+            onClick={() => navigate("/customer")}
+            className="flex flex-col items-center gap-1 text-[#FF5A00]"
+          >
+            <Home size={21} />
+            <span className="text-[10px] font-semibold">Home</span>
+          </button>
+
+          <button
+            onClick={() => navigate("/customer/search")}
+            className="flex flex-col items-center gap-1 text-gray-400"
+          >
+            <Search size={21} />
+            <span className="text-[10px]">Search</span>
+          </button>
+
+          <button
+            onClick={() => navigate("/customer/bookings")}
+            className="flex flex-col items-center gap-1 text-gray-400"
+          >
+            <CalendarDays size={21} />
+            <span className="text-[10px]">Bookings</span>
+          </button>
+
+          <button
+            onClick={() => navigate("/customer/profile")}
+            className="flex flex-col items-center gap-1 text-gray-400"
+          >
+            <User size={21} />
+            <span className="text-[10px]">Profile</span>
+          </button>
+
+          <button className="flex flex-col items-center gap-1 text-gray-400">
+            <Bell size={21} />
+            <span className="text-[10px]">Alerts</span>
+          </button>
+        </nav>
       </div>
     </div>
   );

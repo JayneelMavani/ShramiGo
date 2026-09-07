@@ -26,7 +26,6 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { getServices } from "../../services/services";
-import { BottomNavigation } from "../../components/navigation/BottomNavigation";
 
 interface Service {
   id: number;
@@ -143,13 +142,12 @@ export default function Services() {
   };
 
   return (
-    <main className="min-h-screen w-full bg-[#F7F8F8] flex justify-center">
-      <div className="relative flex min-h-screen w-full max-w-[430px] flex-col bg-[#F7F8F8]">
+    <main className="min-h-screen w-full bg-[#F9FAFB] flex justify-center">
+      <div className="relative flex min-h-screen w-full max-w-[430px] flex-col bg-[#F9FAFB]">
 
         {/* ================= HEADER ================= */}
 
-        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-gray-100">
-          <div className="px-5 pb-5 pt-7">
+        <header className="bg-white px-5 pb-5 pt-7">
           <div className="flex items-center gap-3">
 
             <button
@@ -164,11 +162,10 @@ export default function Services() {
                 items-center
                 justify-center
                 rounded-full
-                bg-gray-100
                 text-[#111827]
-                hover:bg-[#E5E7EB]
-                active:scale-95
                 transition
+                hover:bg-[#F3F4F6]
+                active:scale-95
               "
             >
               <ArrowLeft
@@ -178,16 +175,15 @@ export default function Services() {
             </button>
 
             <div>
-              <h1 className="text-xl font-bold tracking-[-0.3px] text-[#111827]">
+              <h1 className="text-[20px] font-bold tracking-[-0.3px] text-[#111827]">
                 All Categories
               </h1>
 
-              <p className="mt-0.5 text-xs text-[#6B7280]">
+              <p className="mt-0.5 text-[11px] text-[#6B7280]">
                 Find the right service for your needs
               </p>
             </div>
 
-          </div>
           </div>
         </header>
 
@@ -468,7 +464,59 @@ export default function Services() {
 
         </div>
 
-        <BottomNavigation role="customer" />
+        {/* ================= BOTTOM NAVIGATION ================= */}
+
+        <nav
+          className="
+            absolute
+            bottom-0
+            left-0
+            right-0
+            border-t
+            border-[#E5E7EB]
+            bg-white/95
+            px-5
+            pb-5
+            pt-3
+            backdrop-blur-sm
+          "
+        >
+
+          <div className="grid grid-cols-4">
+
+            <NavItem
+              icon={Home}
+              label="Home"
+              onClick={() => navigate("/customer")}
+            />
+
+            <NavItem
+              icon={Search}
+              label="Search"
+              active
+              onClick={() => navigate("/customer/search")}
+            />
+
+            <NavItem
+              icon={CalendarIcon}
+              label="Bookings"
+              onClick={() =>
+                navigate("/customer/bookings")
+              }
+            />
+
+            <NavItem
+              icon={UserRound}
+              label="Profile"
+              onClick={() =>
+                navigate("/customer/profile")
+              }
+            />
+
+          </div>
+
+        </nav>
+
       </div>
     </main>
   );
@@ -547,4 +595,85 @@ function PopularService({
     </button>
   );
 }
-
+
+/* ================= BOTTOM NAV ITEM ================= */
+
+interface NavItemProps {
+  icon: ElementType;
+  label: string;
+  active?: boolean;
+  onClick: () => void;
+}
+
+function NavItem({
+  icon: Icon,
+  label,
+  active = false,
+  onClick,
+}: NavItemProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex flex-col items-center gap-1"
+    >
+
+      <Icon
+        size={20}
+        strokeWidth={active ? 2.2 : 1.8}
+        className={
+          active
+            ? "text-[#FF5A00]"
+            : "text-[#9CA3AF]"
+        }
+      />
+
+      <span
+        className={`text-[9px] font-medium ${
+          active
+            ? "text-[#FF5A00]"
+            : "text-[#9CA3AF]"
+        }`}
+      >
+        {label}
+      </span>
+
+    </button>
+  );
+}
+
+/* ================= CALENDAR ICON ================= */
+
+function CalendarIcon({
+  size = 20,
+  className = "",
+}: {
+  size?: number;
+  className?: string;
+}) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect
+        x="3"
+        y="4"
+        width="18"
+        height="17"
+        rx="2"
+      />
+
+      <path d="M16 2v4M8 2v4M3 10h18" />
+
+      <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
+    </svg>
+  );
+}

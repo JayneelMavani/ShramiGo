@@ -91,7 +91,7 @@ export default function Register() {
             type="button"
             onClick={() => navigate("/worker/login")}
             disabled={loading}
-            className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition disabled:opacity-50"
+            className="w-10 h-10 rounded-xl bg-white/20 hover:bg-white/30 active:scale-95 flex items-center justify-center text-white transition disabled:opacity-50"
           >
             <ArrowLeft size={20} />
           </button>
@@ -156,7 +156,7 @@ export default function Register() {
                   placeholder="Enter your full name"
                   required
                   disabled={loading}
-                  className="w-full h-[50px] rounded-xl border border-gray-200 bg-white pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
+                  className="w-full h-12 rounded-2xl border border-gray-200 bg-gray-50 pl-11 pr-4 text-sm outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
                 />
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function Register() {
                   required
                   maxLength={10}
                   disabled={loading}
-                  className="w-full h-[50px] rounded-xl border border-gray-200 bg-white pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
+                  className="w-full h-12 rounded-2xl border border-gray-200 bg-gray-50 pl-11 pr-4 text-sm outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
                 />
               </div>
             </div>
@@ -211,7 +211,7 @@ export default function Register() {
                   placeholder="Enter your email"
                   required
                   disabled={loading}
-                  className="w-full h-[50px] rounded-xl border border-gray-200 bg-white pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
+                  className="w-full h-12 rounded-2xl border border-gray-200 bg-gray-50 pl-11 pr-4 text-sm outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
                 />
               </div>
             </div>
@@ -242,7 +242,7 @@ export default function Register() {
                   required
                   minLength={8}
                   disabled={loading}
-                  className="w-full h-[50px] rounded-xl border border-gray-200 bg-white pl-11 pr-11 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
+                  className="w-full h-12 rounded-2xl border border-gray-200 bg-gray-50 pl-11 pr-11 text-sm outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
                 />
 
                 <button
@@ -288,7 +288,7 @@ export default function Register() {
                   required
                   minLength={8}
                   disabled={loading}
-                  className="w-full h-[50px] rounded-xl border border-gray-200 bg-white pl-11 pr-11 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
+                  className="w-full h-12 rounded-2xl border border-gray-200 bg-gray-50 pl-11 pr-11 text-sm outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
                 />
 
                 <button

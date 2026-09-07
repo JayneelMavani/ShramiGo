@@ -11,6 +11,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { getAdminUsers, toggleUserActive, type AdminUser } from "../../services/admin";
+import AdminSidebar from "../../components/admin/AdminSidebar";
 
 type UserRole = "Customer" | "Worker";
 
@@ -28,6 +29,7 @@ const users: User[] = [];
 
 export default function Users() {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"All" | UserRole>("All");
@@ -115,16 +117,19 @@ export default function Users() {
   }, [userList, search, filter]);
 
   return (
-    <div className="min-h-screen bg-[#F7F8F8] text-gray-900">
+    <div className="min-h-screen bg-[#F7F8F8] dark:bg-[#101A18] text-gray-900 dark:text-[#F7F2E8]">
+      <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
       <header className="bg-[#087F7A] text-white">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 py-5">
 
+          <div className="flex items-center justify-between">
+
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate("/admin")}
-              className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20"
+              className="w-10 h-10 rounded-xl bg-white dark:bg-[#1C2825]/10 flex items-center justify-center hover:bg-white dark:bg-[#1C2825]/20"
             >
               <ArrowLeft size={20} />
             </button>
@@ -140,6 +145,12 @@ export default function Users() {
             </div>
           </div>
 
+          <button type="button" onClick={() => setSidebarOpen(true)} className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20" title="Menu">
+            <span className="sr-only">Menu</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+
+          </div>
         </div>
       </header>
 
@@ -154,7 +165,7 @@ export default function Users() {
         {/* Summary */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-7">
 
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
             <div className="w-10 h-10 rounded-xl bg-[#087F7A]/10 flex items-center justify-center">
               <UsersIcon
                 size={20}
@@ -162,7 +173,7 @@ export default function Users() {
               />
             </div>
 
-            <p className="text-xs text-gray-500 mt-4">
+            <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-4">
               Total Users
             </p>
 
@@ -171,7 +182,7 @@ export default function Users() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
             <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
               <UserRound
                 size={20}
@@ -179,7 +190,7 @@ export default function Users() {
               />
             </div>
 
-            <p className="text-xs text-gray-500 mt-4">
+            <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-4">
               Customers
             </p>
 
@@ -188,7 +199,7 @@ export default function Users() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-5">
             <div className="w-10 h-10 rounded-xl bg-[#087F7A]/10 flex items-center justify-center">
               <BriefcaseBusiness
                 size={20}
@@ -196,7 +207,7 @@ export default function Users() {
               />
             </div>
 
-            <p className="text-xs text-gray-500 mt-4">
+            <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-4">
               Workers
             </p>
 
@@ -208,7 +219,7 @@ export default function Users() {
         </div>
 
         {/* Search & Filter */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 mb-5">
+        <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] p-4 mb-5">
 
           <div className="flex flex-col lg:flex-row gap-4">
 
@@ -222,7 +233,7 @@ export default function Users() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by name, email or user ID..."
-                className="w-full h-11 pl-11 pr-4 rounded-xl bg-gray-50 border border-gray-200 outline-none focus:border-[#087F7A] text-sm"
+                className="w-full h-11 pl-11 pr-4 rounded-xl bg-gray-50 dark:bg-[#1C2825] border border-gray-200 dark:border-[#2C3834] outline-none focus:border-[#087F7A] text-sm"
               />
             </div>
 
@@ -236,7 +247,7 @@ export default function Users() {
                     className={`px-4 py-2.5 rounded-xl text-sm font-medium transition ${
                       filter === item
                         ? "bg-[#087F7A] text-white"
-                        : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                        : "bg-gray-50 dark:bg-[#1C2825] text-gray-600 dark:text-[#C8C0B4] hover:bg-gray-100 dark:hover:bg-[#3D3931] dark:bg-[#26332F]"
                     }`}
                   >
                     {item}
@@ -250,15 +261,15 @@ export default function Users() {
         </div>
 
         {/* User List */}
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+        <div className="bg-white dark:bg-[#1C2825] rounded-2xl border border-gray-100 dark:border-[#3D4944] overflow-hidden">
 
-          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+          <div className="px-5 py-4 border-b border-gray-100 dark:border-[#3D4944] flex items-center justify-between">
             <div>
               <h2 className="font-bold">
                 Registered Users
               </h2>
 
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1">
                 {filteredUsers.length} users displayed
               </p>
             </div>
@@ -274,28 +285,28 @@ export default function Users() {
 
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50 text-left">
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                <tr className="bg-gray-50 dark:bg-[#1C2825] text-left">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     User
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Role
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Contact
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Status
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Joined
                   </th>
 
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-500">
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-[#9A9185]">
                     Action
                   </th>
                 </tr>
@@ -305,7 +316,7 @@ export default function Users() {
                 {filteredUsers.map((user) => (
                   <tr
                     key={user.id}
-                    className="border-t border-gray-100 hover:bg-gray-50/70"
+                    className="border-t border-gray-100 dark:border-[#3D4944] hover:bg-gray-50 dark:hover:bg-[#3D3931] dark:bg-[#1C2825]/70"
                   >
 
                     <td className="px-5 py-4">
@@ -372,7 +383,7 @@ export default function Users() {
                       </span>
                     </td>
 
-                    <td className="px-5 py-4 text-sm text-gray-500">
+                    <td className="px-5 py-4 text-sm text-gray-500 dark:text-[#9A9185]">
                       {user.joined}
                     </td>
 
@@ -511,7 +522,7 @@ export default function Users() {
       {selectedUser && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center px-4 z-50">
 
-          <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-xl">
+          <div className="w-full max-w-md bg-white dark:bg-[#1C2825] rounded-3xl p-6 shadow-xl">
 
             <div className="flex items-center justify-between">
 
@@ -521,7 +532,7 @@ export default function Users() {
 
               <button
                 onClick={() => setSelectedUser(null)}
-                className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center"
+                className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-[#26332F] flex items-center justify-center"
               >
                 <X size={18} />
               </button>
@@ -549,7 +560,7 @@ export default function Users() {
                   {selectedUser.name}
                 </h3>
 
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 dark:text-[#9A9185] mt-1">
                   {selectedUser.id}
                 </p>
               </div>

@@ -21,7 +21,6 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import { BottomNavigation } from "../../components/navigation/BottomNavigation";
 
 import {
   getWorkers,
@@ -99,13 +98,12 @@ export default function SearchWorkers() {
   }, [workers, searchText]);
 
   return (
-    <main className="min-h-screen w-full bg-[#F7F8F8] flex justify-center">
-      <div className="relative flex min-h-screen w-full max-w-[430px] flex-col bg-[#F7F8F8]">
+    <main className="min-h-screen w-full bg-[#F9FAFB] flex justify-center">
+      <div className="relative flex min-h-screen w-full max-w-[430px] flex-col bg-[#F9FAFB]">
 
         {/* ================= HEADER ================= */}
 
-        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-gray-100">
-          <div className="px-5 pb-4 pt-7">
+        <header className="bg-white px-5 pb-4 pt-7">
           <div className="flex items-center gap-3">
 
             <button
@@ -121,11 +119,9 @@ export default function SearchWorkers() {
                 items-center
                 justify-center
                 rounded-full
-                bg-gray-100
                 text-[#111827]
-                hover:bg-[#E5E7EB]
+                hover:bg-[#F3F4F6]
                 active:scale-95
-                transition
               "
             >
               <ArrowLeft size={20} />
@@ -136,7 +132,7 @@ export default function SearchWorkers() {
                 Find nearby professionals
               </p>
 
-              <h1 className="truncate text-xl font-bold text-[#111827]">
+              <h1 className="truncate text-[19px] font-bold text-[#111827]">
                 {displayService}
               </h1>
             </div>
@@ -150,10 +146,10 @@ export default function SearchWorkers() {
                 items-center
                 justify-center
                 rounded-full
-                bg-gray-100
+                border
+                border-[#E5E7EB]
+                bg-white
                 text-[#374151]
-                hover:bg-[#E5E7EB]
-                transition
               "
             >
               <SlidersHorizontal size={18} />
@@ -172,7 +168,7 @@ export default function SearchWorkers() {
               rounded-[12px]
               border
               border-[#E5E7EB]
-              bg-[#F7F8F8]
+              bg-[#F9FAFB]
               px-4
             "
           >
@@ -205,7 +201,6 @@ export default function SearchWorkers() {
             >
               <Filter size={17} />
             </button>
-          </div>
           </div>
         </header>
 
@@ -619,9 +614,138 @@ export default function SearchWorkers() {
           </button>
         </div>
 
-        <BottomNavigation role="customer" />
+        {/* ================= BOTTOM NAVIGATION ================= */}
+
+        <nav
+          className="
+            absolute
+            bottom-0
+            left-0
+            right-0
+            border-t
+            border-[#E5E7EB]
+            bg-white/95
+            px-5
+            pb-5
+            pt-3
+            backdrop-blur-sm
+          "
+        >
+          <div className="grid grid-cols-4">
+
+            <NavItem
+              icon={Home}
+              label="Home"
+              onClick={() =>
+                navigate("/customer")
+              }
+            />
+
+            <NavItem
+              icon={Search}
+              label="Search"
+              active
+              onClick={() =>
+                navigate("/customer/search")
+              }
+            />
+
+            <NavItem
+              icon={CalendarIcon}
+              label="Bookings"
+              onClick={() =>
+                navigate("/customer/bookings")
+              }
+            />
+
+            <NavItem
+              icon={UserRound}
+              label="Profile"
+              onClick={() =>
+                navigate("/customer/profile")
+              }
+            />
+
+          </div>
+        </nav>
       </div>
     </main>
   );
 }
-
+
+/* ================= NAV ITEM ================= */
+
+interface NavItemProps {
+  icon: React.ElementType;
+  label: string;
+  active?: boolean;
+  onClick: () => void;
+}
+
+function NavItem({
+  icon: Icon,
+  label,
+  active = false,
+  onClick,
+}: NavItemProps) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center gap-1"
+    >
+      <Icon
+        size={20}
+        strokeWidth={active ? 2.2 : 1.8}
+        className={
+          active
+            ? "text-[#FF5A00]"
+            : "text-[#9CA3AF]"
+        }
+      />
+
+      <span
+        className={`text-[9px] font-medium ${
+          active
+            ? "text-[#FF5A00]"
+            : "text-[#9CA3AF]"
+        }`}
+      >
+        {label}
+      </span>
+    </button>
+  );
+}
+
+/* ================= CALENDAR ================= */
+
+function CalendarIcon({
+  size = 20,
+  className = "",
+}: {
+  size?: number;
+  className?: string;
+}) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect
+        x="3"
+        y="4"
+        width="18"
+        height="17"
+        rx="2"
+      />
+      <path d="M16 2v4M8 2v4M3 10h18" />
+      <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
+    </svg>
+  );
+}

@@ -36,7 +36,13 @@ import AdminWorkers from "./pages/Admin/Workers";
 import AdminBookings from "./pages/Admin/Bookings";
 import AdminReports from "./pages/Admin/Reports";
 import AdminNotifications from "./pages/Admin/Notifications";
+import AdminServices from "./pages/Admin/Services";
+import AdminPayments from "./pages/Admin/Payments";
+import AdminReviews from "./pages/Admin/Reviews";
+import AdminSettings from "./pages/Admin/Settings";
+import AdminDeleteUsers from "./pages/Admin/DeleteUsers";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { PWAInstallPrompt } from "./components/common/PWAInstallPrompt";
 
 export default function App() {
   return (
@@ -203,16 +209,47 @@ export default function App() {
           element={<ProtectedRoute roles={["admin"]}><AdminNotifications /></ProtectedRoute>}
         />
 
+        {/* Admin Services */}
+        <Route
+          path="/admin/services"
+          element={<ProtectedRoute roles={["admin"]}><AdminServices /></ProtectedRoute>}
+        />
+
+        {/* Admin Payments */}
+        <Route
+          path="/admin/payments"
+          element={<ProtectedRoute roles={["admin"]}><AdminPayments /></ProtectedRoute>}
+        />
+
+        {/* Admin Reviews */}
+        <Route
+          path="/admin/reviews"
+          element={<ProtectedRoute roles={["admin"]}><AdminReviews /></ProtectedRoute>}
+        />
+
+        {/* Admin Settings */}
+        <Route
+          path="/admin/settings"
+          element={<ProtectedRoute roles={["admin"]}><AdminSettings /></ProtectedRoute>}
+        />
+
+        {/* Admin Delete Users */}
+        <Route
+          path="/admin/delete-users"
+          element={<ProtectedRoute roles={["admin"]}><AdminDeleteUsers /></ProtectedRoute>}
+        />
+
         {/* =====================================================
             FALLBACK
            ===================================================== */}
 
-        {/* Any unknown URL → Welcome */}
+        {/* Any unknown URL → Root / Splash */}
         <Route
           path="*"
-          element={<Navigate to="/welcome" replace />}
+          element={<Navigate to="/" replace />}
         />
       </Routes>
+      <PWAInstallPrompt />
     </BrowserRouter>
   );
 }

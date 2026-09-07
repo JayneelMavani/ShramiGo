@@ -27,7 +27,7 @@ export function BrandLogo({ size = "md" }: BrandLogoProps) {
 
   return (
     <div
-      className={`${logoSize.outer} flex shrink-0 items-center justify-center bg-white shadow-lg`}
+      className={`${logoSize.outer} flex shrink-0 items-center justify-center bg-white dark:bg-[#1C2825] shadow-lg`}
       role="img"
       aria-label="ShramiGo logo"
     >

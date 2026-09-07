@@ -17,6 +17,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html.dark {
+  color: #F7F2E8;
+  background: #101A18;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -29,7 +34,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #f7f8f8;
+  @apply bg-[#f7f8f8] dark:bg-[#101A18] text-gray-900 dark:text-[#F7F2E8];
 }
 
 button,
@@ -62,25 +67,22 @@ a {
 }
 
 /* ==============================
-   Scrollbar
+   Scrollbar – hidden for PWA
    ============================== */
 
+/* WebKit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f3f3;
+/* Firefox */
+html {
+  scrollbar-width: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5d5;
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #087f7a;
+/* IE/Edge legacy */
+body {
+  -ms-overflow-style: none;
 }
 
 /* ==============================
@@ -90,6 +92,14 @@ a {
 ::selection {
   background: #087f7a;
   color: white;
+}
+
+/* ==============================
+   Lucide Icons – thinner stroke
+   ============================== */
+
+.lucide {
+  stroke-width: 1.5px;
 }
 
 /* ==============================
@@ -123,34 +133,4 @@ textarea {
 html,
 body {
   overflow-x: hidden;
-}
-
-/* ==============================
-   Animations
-   ============================== */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.25s ease-out forwards;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
