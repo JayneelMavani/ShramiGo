@@ -1,0 +1,30 @@
+{
+  "name": "shramigo-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "lint": "tsc -b",
+    "typecheck": "tsc -b",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@mapbox/search-js-react": "^1.6.0",
+    "lucide-react": "1.40.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-router-dom": "6.30.6"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "@vitejs/plugin-react": "6.1.1",
+    "autoprefixer": "10.5.4",
+    "postcss": "8.5.28",
+    "tailwindcss": "3.4.19",
+    "typescript": "6.0.3",
+    "vite": "8.2.2"
+  }
+}
