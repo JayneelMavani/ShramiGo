@@ -102,7 +102,7 @@ export default function Login() {
                   placeholder="admin@shramigo.com"
                   required
                   disabled={loading}
-                  className="w-full h-12 pl-11 pr-4 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 text-sm"
+                  className="w-full h-[50px] pl-11 pr-4 rounded-xl border border-gray-200 bg-white text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10"
                 />
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
                   required
-                  className="w-full h-12 pl-11 pr-12 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 text-sm"
+                  className="w-full h-[50px] pl-11 pr-12 rounded-xl border border-gray-200 bg-white text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10"
                 />
 
                 <button

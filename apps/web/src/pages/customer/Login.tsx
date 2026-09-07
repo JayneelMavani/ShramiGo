@@ -171,7 +171,7 @@ export default function Login() {
                     ? "Enter your phone number"
                     : "Enter your email address"
                 }
-                className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#FF5A00]"
+                className="w-full rounded-xl border border-gray-200 bg-white h-[50px] pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#FF5A00] focus:ring-2 focus:ring-[#FF5A00]/10"
                 required
               />
             </div>
@@ -182,7 +182,7 @@ export default function Login() {
             </label>
 
             <div className="relative">
-              <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#087F7A]">
+              <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#FF5A00]">
                 <Lock size={18} />
               </div>
 
@@ -191,7 +191,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-11 pr-11 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A]"
+                className="w-full rounded-xl border border-gray-200 bg-white h-[50px] pl-11 pr-11 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#FF5A00] focus:ring-2 focus:ring-[#FF5A00]/10"
                 required
               />
 

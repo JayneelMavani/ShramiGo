@@ -2,12 +2,12 @@ import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
-  ArrowRight,
   Eye,
   EyeOff,
-  LockKeyhole,
+  Lock,
   Mail,
   ShieldCheck,
+  BriefcaseBusiness,
 } from "lucide-react";
 import { BrandLogo } from "../../components/BrandLogo";
 import { login } from "../../services/auth";
@@ -15,9 +15,10 @@ import { login } from "../../services/auth";
 export default function Login() {
   const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [remember, setRemember] = useState(true);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -61,213 +62,199 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F8F8] flex items-center justify-center px-4">
-      <div className="w-full max-w-md min-h-screen sm:min-h-[720px] bg-white sm:rounded-[32px] shadow-xl overflow-hidden flex flex-col">
-
+    <div className="min-h-screen bg-[#F7F8F8] text-[#171717]">
+      <div className="mx-auto min-h-screen max-w-[430px] bg-white shadow-sm">
         {/* Header */}
-        <div className="bg-[#087F7A] px-6 pt-8 pb-9 rounded-b-[34px]">
-
+        <header className="px-5 pt-5">
           <button
-            type="button"
             onClick={() => navigate("/role-selection")}
-            className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F7F8F8]"
           >
             <ArrowLeft size={20} />
           </button>
+        </header>
 
-          <div className="mt-7 flex items-center gap-3">
-            <BrandLogo size="sm" />
-
-            <div>
-              <p className="text-white/60 text-xs">
-                Worker Account
-              </p>
-
-              <h1 className="text-xl font-bold text-white">
-                Welcome back
-              </h1>
-            </div>
+        <main className="px-5 pb-10 pt-7">
+          {/* Logo */}
+          <div className="flex justify-center">
+            <BrandLogo size="md" />
           </div>
 
-          <p className="text-white/75 text-sm mt-5 leading-5">
-            Sign in to manage your jobs, schedule and earnings.
-          </p>
-        </div>
+          {/* Heading */}
+          <div className="mt-5 text-center">
+            <h1 className="text-2xl font-bold">
+              Welcome back
+            </h1>
 
-        {/* Form */}
-        <div className="flex-1 px-6 pt-8">
-
-          <div className="mb-7">
-            <h2 className="text-2xl font-bold text-gray-900">
-              Sign in
-            </h2>
-
-            <p className="text-sm text-gray-500 mt-1">
-              Enter your account details to continue.
+            <p className="mt-2 text-sm leading-5 text-gray-500">
+              Sign in to manage your jobs, schedule and earnings.
             </p>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-5"
-          >
+          {/* Error */}
+          {error && (
+            <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+              <p className="text-xs font-medium text-red-600">
+                {error}
+              </p>
+            </div>
+          )}
 
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="mt-6">
             {/* Email */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-800 mb-2">
-                Email address
-              </label>
+            <label className="mb-2 block text-xs font-semibold text-gray-700">
+              Email Address
+            </label>
 
-              <div className="relative">
-                <Mail
-                  size={19}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                />
-
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) =>
-                    setEmail(e.target.value)
-                  }
-                  placeholder="Enter your email"
-                  required
-                  disabled={loading}
-                  className="w-full h-13 rounded-2xl border border-gray-200 bg-gray-50 pl-12 pr-4 text-sm text-gray-900 outline-none transition focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
-                />
+            <div className="relative">
+              <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#087F7A]">
+                <Mail size={18} />
               </div>
+
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="w-full rounded-xl border border-gray-200 bg-white h-[50px] pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10"
+                required
+                disabled={loading}
+              />
             </div>
 
             {/* Password */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
+            <label className="mb-2 mt-5 block text-xs font-semibold text-gray-700">
+              Password
+            </label>
 
-                <label className="block text-sm font-semibold text-gray-800">
-                  Password
-                </label>
-
-                <button
-                  type="button"
-                  className="text-xs font-semibold text-[#087F7A] hover:underline"
-                >
-                  Forgot password?
-                </button>
-
+            <div className="relative">
+              <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#087F7A]">
+                <Lock size={18} />
               </div>
 
-              <div className="relative">
-                <LockKeyhole
-                  size={19}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                />
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="w-full rounded-xl border border-gray-200 bg-white h-[50px] pl-11 pr-11 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10"
+                required
+                disabled={loading}
+              />
 
-                <input
-                  type={
-                    showPassword
-                      ? "text"
-                      : "password"
-                  }
-                  value={password}
-                  onChange={(e) =>
-                    setPassword(e.target.value)
-                  }
-                  placeholder="Enter your password"
-                  required
-                  disabled={loading}
-                  className="w-full h-13 rounded-2xl border border-gray-200 bg-gray-50 pl-12 pr-12 text-sm text-gray-900 outline-none transition focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 disabled:opacity-60"
-                />
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    setShowPassword(!showPassword)
-                  }
-                  disabled={loading}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
-                  aria-label={
-                    showPassword
-                      ? "Hide password"
-                      : "Show password"
-                  }
-                >
-                  {showPassword ? (
-                    <EyeOff size={19} />
-                  ) : (
-                    <Eye size={19} />
-                  )}
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  setShowPassword(!showPassword)
+                }
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+              >
+                {showPassword ? (
+                  <EyeOff size={18} />
+                ) : (
+                  <Eye size={18} />
+                )}
+              </button>
             </div>
 
-            {/* Error */}
-            {error && (
-              <div className="rounded-2xl bg-red-50 border border-red-100 px-4 py-3">
-                <p className="text-sm text-red-600">
-                  {error}
-                </p>
-              </div>
-            )}
+            {/* Remember + Forgot */}
+            <div className="mt-4 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setRemember(!remember)}
+                className="flex items-center gap-2"
+              >
+                <span
+                  className={`flex h-4 w-4 items-center justify-center rounded border ${
+                    remember
+                      ? "border-[#087F7A] bg-[#087F7A]"
+                      : "border-gray-300 bg-white"
+                  }`}
+                >
+                  {remember && (
+                    <span className="text-[10px] font-bold text-white">
+                      ✓
+                    </span>
+                  )}
+                </span>
 
-            {/* Submit */}
+                <span className="text-xs text-gray-500">
+                  Remember me
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setError(
+                    "Password reset is currently handled via support. Please contact support@shramigo.in for account recovery."
+                  )
+                }
+                className="text-xs font-semibold text-[#087F7A] hover:underline"
+              >
+                Forgot Password?
+              </button>
+            </div>
+
+            {/* Login */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-14 rounded-2xl bg-[#087F7A] hover:bg-[#066C68] disabled:bg-[#087F7A]/60 text-white font-semibold flex items-center justify-center gap-2 shadow-lg shadow-teal-100 transition-all active:scale-[0.98] disabled:cursor-not-allowed"
+              className="mt-6 flex w-full items-center justify-center rounded-xl bg-[#087F7A] py-3.5 text-sm font-bold text-white shadow-sm transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {loading ? (
-                "Signing in..."
-              ) : (
-                <>
-                  Sign In
-                  <ArrowRight size={19} />
-                </>
-              )}
+              {loading ? "Logging in..." : "Login"}
             </button>
-
           </form>
 
           {/* Security */}
-          <div className="mt-7 flex items-center justify-center gap-2">
+          <div className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#E9F7F6] px-4 py-3">
             <ShieldCheck
-              size={16}
+              size={17}
               className="text-[#087F7A]"
             />
 
-            <p className="text-xs text-gray-500">
-              Your account information is secure
+            <p className="text-[10px] font-medium text-[#087F7A]">
+              Your account and personal information are secure
             </p>
           </div>
 
-        </div>
+          {/* Divider */}
+          <div className="my-6 flex items-center gap-3">
+            <div className="h-px flex-1 bg-gray-200" />
+            <span className="text-xs text-gray-400">
+              OR
+            </span>
+            <div className="h-px flex-1 bg-gray-200" />
+          </div>
 
-        {/* Register */}
-        <div className="px-6 pb-8 pt-6">
-
-          <div className="h-px bg-gray-100 mb-6" />
-
+          {/* Register */}
           <p className="text-center text-sm text-gray-500">
-            Don't have a worker account?
+            Don't have a worker account?{" "}
+            <Link
+              to="/worker/register"
+              className="font-bold text-[#087F7A]"
+            >
+              Create Account
+            </Link>
           </p>
 
-          <Link
-            to="/worker/register"
-            className="mt-2 flex items-center justify-center text-sm font-semibold text-[#FF5A00] hover:underline"
-          >
-            Create Worker Account
-          </Link>
-
+          {/* Worker Role */}
+          <div className="mt-6 flex items-center justify-center gap-2 text-[10px] text-gray-400">
+            <BriefcaseBusiness size={13} />
+            <span>Logging in as Worker</span>
+          </div>
+          
           <button
             type="button"
             onClick={() =>
               navigate("/role-selection")
             }
-            className="w-full mt-5 text-xs text-gray-400 hover:text-gray-600 transition"
+            className="w-full mt-4 text-xs text-gray-400 hover:text-gray-600 transition"
           >
             Change role
           </button>
-
-        </div>
-
+        </main>
       </div>
     </div>
   );
