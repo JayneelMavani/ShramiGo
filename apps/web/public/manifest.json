@@ -1,0 +1,39 @@
+{
+  "name": "ShramiGo - Service Marketplace",
+  "short_name": "ShramiGo",
+  "description": "Connecting customers with verified skilled workers for home services, repair, and maintenance.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F7F8F8",
+  "theme_color": "#087F7A",
+  "icons": [
+    {
+      "src": "/pwa-icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Find Services",
+      "short_name": "Services",
+      "description": "Browse and book home services",
+      "url": "/customer/search"
+    },
+    {
+      "name": "My Bookings",
+      "short_name": "Bookings",
+      "description": "Check active service bookings",
+      "url": "/customer/bookings"
+    }
+  ]
+}

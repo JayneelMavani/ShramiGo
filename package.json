@@ -1,8 +1,8 @@
 {
-  "name": "shramsetu-monorepo",
+  "name": "shramigo-monorepo",
   "version": "1.0.0",
   "private": true,
-  "description": "ShramSetu Monorepo",
+  "description": "ShramiGo Monorepo",
   "scripts": {
     "dev": "pnpm -r run dev",
     "build": "pnpm -r run build",

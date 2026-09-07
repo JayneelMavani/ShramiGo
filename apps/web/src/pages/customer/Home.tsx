@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { getStoredUser, type AuthUser } from "../../services/auth";
 import { getCustomerProfile } from "../../services/profile";
 import { getWorkers, type Worker } from "../../services/worker";
+import { BottomNavigation } from "../../components/navigation/BottomNavigation";
 
 const services = [
   {
@@ -510,49 +511,7 @@ export default function Home() {
           </section>
         </div>
 
-        {/* ================= BOTTOM NAVIGATION ================= */}
-        <nav
-          className="
-            absolute
-            bottom-0
-            left-0
-            right-0
-            border-t
-            border-[#E5E7EB]
-            bg-white/95
-            px-5
-            pb-5
-            pt-3
-            backdrop-blur-sm
-          "
-        >
-          <div className="grid grid-cols-4">
-            <NavItem
-              icon={HomeIcon}
-              label="Home"
-              active
-              onClick={() => navigate("/customer")}
-            />
-
-            <NavItem
-              icon={Search}
-              label="Search"
-              onClick={() => navigate("/customer/search")}
-            />
-
-            <NavItem
-              icon={CalendarDays}
-              label="Bookings"
-              onClick={() => navigate("/customer/bookings")}
-            />
-
-            <NavItem
-              icon={UserRound}
-              label="Profile"
-              onClick={() => navigate("/customer/profile")}
-            />
-          </div>
-        </nav>
+        <BottomNavigation role="customer" />
       </div>
     </main>
   );

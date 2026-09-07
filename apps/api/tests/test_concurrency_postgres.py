@@ -25,8 +25,8 @@ def test_concurrent_booking_requests_allow_exactly_one_booking() -> None:
         pytest.skip("PostgreSQL integration test skipped: TEST_DATABASE_URL is not configured.")
 
     database_name = make_url(database_url).database
-    if database_name != "shramsetu_test":
-        pytest.fail("Refusing concurrency test: TEST_DATABASE_URL must target the isolated shramsetu_test database")
+    if database_name != "shramigo_test":
+        pytest.fail("Refusing concurrency test: TEST_DATABASE_URL must target the isolated shramigo_test database")
 
     engine = create_engine(database_url, pool_pre_ping=True)
     Base.metadata.create_all(bind=engine)

@@ -34,7 +34,10 @@ shramigo/
 
 ## Configuration
 
-1. **Backend**: Copy `apps/api/.env.example` to `apps/api/.env` and set a real PostgreSQL URL and random `SECRET_KEY` of at least 32 characters. Set `CORS_ORIGINS` to the exact frontend origins. 
+1. **Backend**: Copy `apps/api/.env.example` to `apps/api/.env` and set a real PostgreSQL URL and random `SECRET_KEY` of at least 32 characters. 
+   - **Local PostgreSQL**: Set `DATABASE_URL` and keep `USE_SUPABASE=false`.
+   - **Supabase (Current Default)**: Set `SUPABASE_DATABASE_URL` with your Supabase connection string and set `USE_SUPABASE=true`.
+   Set `CORS_ORIGINS` to the exact frontend origins. 
 2. **Frontend**: Set `VITE_API_BASE_URL` in `apps/web/.env` for the backend URL.
 
 *Do not commit `.env`, database credentials, JWT secrets, or payment credentials.*
@@ -84,7 +87,7 @@ pytest
 python -m compileall app
 ```
 
-*(For the PostgreSQL concurrency test, use a dedicated database named `shramsetu_test` and set `$env:TEST_DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/shramsetu_test"` before running `pytest`)*
+*(For the PostgreSQL concurrency test, use a dedicated database named `shramigo_test` and set `$env:TEST_DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/shramigo_test"` before running `pytest`)*
 
 ### Frontend
 

@@ -81,14 +81,14 @@ To execute the PostgreSQL concurrency test against a dedicated database:
 Windows PowerShell:
 
 ```powershell
-$env:TEST_DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/shramsetu_test"
+$env:TEST_DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/shramigo_test"
 pytest
 ```
 
 Linux/macOS:
 
 ```bash
-export TEST_DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/shramsetu_test"
+export TEST_DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/shramigo_test"
 pytest
 ```
 

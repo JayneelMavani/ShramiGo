@@ -99,7 +99,7 @@ export default function Login() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@shramsetu.com"
+                  placeholder="admin@shramigo.com"
                   required
                   disabled={loading}
                   className="w-full h-12 pl-11 pr-4 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-[#087F7A] focus:ring-2 focus:ring-[#087F7A]/10 text-sm"

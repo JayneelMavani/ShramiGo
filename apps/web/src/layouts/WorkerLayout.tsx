@@ -2,5 +2,10 @@ import { Outlet } from 'react-router-dom'
 import { BottomNavigation } from '../components/navigation/BottomNavigation'
 
 export function WorkerLayout() {
-  return <div className="app-shell"><Outlet /><BottomNavigation role="worker" /></div>
+  return (
+    <div className="min-h-screen pb-20 bg-[#F7F8F8]">
+      <Outlet />
+      <BottomNavigation role="worker" />
+    </div>
+  )
 }

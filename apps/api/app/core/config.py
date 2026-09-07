@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     DATABASE_URL: str
+    SUPABASE_DATABASE_URL: str | None = None
+    USE_SUPABASE: bool = False
 
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
@@ -35,6 +37,12 @@ class Settings(BaseSettings):
     @property
     def cors_origins(self) -> list[str]:
         return [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
+
+    @property
+    def effective_database_url(self) -> str:
+        if self.USE_SUPABASE and self.SUPABASE_DATABASE_URL:
+            return self.SUPABASE_DATABASE_URL
+        return self.DATABASE_URL
 
     model_config = SettingsConfigDict(
         env_file=".env",

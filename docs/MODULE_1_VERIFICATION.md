@@ -41,10 +41,10 @@ python -m compileall app
 pytest
 ```
 
-For the concurrency integration test, use a dedicated database named exactly `shramsetu_test`:
+For the concurrency integration test, use a dedicated database named exactly `shramigo_test`:
 
 ```powershell
-$env:TEST_DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/shramsetu_test"
+$env:TEST_DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/shramigo_test"
 pytest
 ```
 

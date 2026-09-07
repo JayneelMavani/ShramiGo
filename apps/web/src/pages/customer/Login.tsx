@@ -240,7 +240,7 @@ export default function Login() {
                 type="button"
                 onClick={() =>
                   setError(
-                    "Password reset is currently handled via support. Please contact support@shramsetu.in for account recovery."
+                    "Password reset is currently handled via support. Please contact support@shramigo.in for account recovery."
                   )
                 }
                 className="text-xs font-semibold text-[#FF5A00] hover:underline"

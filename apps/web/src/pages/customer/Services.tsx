@@ -26,6 +26,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { getServices } from "../../services/services";
+import { BottomNavigation } from "../../components/navigation/BottomNavigation";
 
 interface Service {
   id: number;
@@ -464,59 +465,7 @@ export default function Services() {
 
         </div>
 
-        {/* ================= BOTTOM NAVIGATION ================= */}
-
-        <nav
-          className="
-            absolute
-            bottom-0
-            left-0
-            right-0
-            border-t
-            border-[#E5E7EB]
-            bg-white/95
-            px-5
-            pb-5
-            pt-3
-            backdrop-blur-sm
-          "
-        >
-
-          <div className="grid grid-cols-4">
-
-            <NavItem
-              icon={Home}
-              label="Home"
-              onClick={() => navigate("/customer")}
-            />
-
-            <NavItem
-              icon={Search}
-              label="Search"
-              active
-              onClick={() => navigate("/customer/search")}
-            />
-
-            <NavItem
-              icon={CalendarIcon}
-              label="Bookings"
-              onClick={() =>
-                navigate("/customer/bookings")
-              }
-            />
-
-            <NavItem
-              icon={UserRound}
-              label="Profile"
-              onClick={() =>
-                navigate("/customer/profile")
-              }
-            />
-
-          </div>
-
-        </nav>
-
+        <BottomNavigation role="customer" />
       </div>
     </main>
   );

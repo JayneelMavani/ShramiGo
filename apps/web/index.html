@@ -2,38 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#087F7A" />
+    <meta name="description" content="ShramiGo - Connecting people. Empowering work." />
+    <meta name="keywords" content="ShramiGo, gig services, household services, workers, local services" />
+    <meta name="author" content="ShramiGo" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-
-    <meta
-      name="theme-color"
-      content="#087F7A"
-    />
-
-    <meta
-      name="description"
-      content="ShramiGo - Connecting people. Empowering work."
-    />
-
-    <meta
-      name="keywords"
-      content="ShramiGo, gig services, household services, workers, local services"
-    />
-
-    <meta
-      name="author"
-      content="ShramiGo"
-    />
+    <!-- PWA Settings -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="ShramiGo" />
+    <link rel="apple-touch-icon" href="/pwa-icon.jpg" />
 
     <!-- Favicon -->
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/favicon.svg"
-    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <title>ShramiGo - Connecting People. Empowering Work.</title>
   </head>
@@ -42,5 +26,14 @@
     <div id="root"></div>
 
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('ShramiGo PWA Service Worker Registered! Scope:', reg.scope))
+            .catch(err => console.log('Service Worker registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>

@@ -18,6 +18,7 @@ import {
 import { BrandLogo } from "../../components/BrandLogo";
 import { getWorkerBookings, type Booking } from "../../services/bookings";
 import { getWorkerAvailability, type WorkerAvailability } from "../../services/worker";
+import { BottomNavigation } from "../../components/navigation/BottomNavigation";
 
 interface StoredUser {
   id: number;
@@ -497,72 +498,7 @@ export default function Dashboard() {
         </div>
 
         {/* Bottom Navigation */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-3 px-6 z-40">
-          <div className="max-w-md mx-auto flex items-center justify-around">
-
-            <button
-              type="button"
-              onClick={() => navigate("/worker")}
-              className="flex flex-col items-center gap-1 text-[#087F7A]"
-            >
-              <BriefcaseBusiness size={20} />
-
-              <span className="text-[10px] font-semibold">
-                Home
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate("/worker/job-requests")}
-              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
-            >
-              <Search size={20} />
-
-              <span className="text-[10px]">
-                Jobs
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate("/worker/availability")}
-              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
-            >
-              <CalendarDays size={20} />
-
-              <span className="text-[10px]">
-                Schedule
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate("/worker/earnings")}
-              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
-            >
-              <Wallet size={20} />
-
-              <span className="text-[10px]">
-                Earnings
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate("/worker/profile")}
-              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600"
-            >
-              <Menu size={20} />
-
-              <span className="text-[10px]">
-                More
-              </span>
-            </button>
-
-          </div>
-        </div>
-
+        <BottomNavigation role="worker" />
       </div>
     </div>
   );
