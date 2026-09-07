@@ -1,0 +1,14 @@
+{
+  "name": "shramsetu-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ShramSetu Monorepo",
+  "scripts": {
+    "dev": "pnpm -r run dev",
+    "build": "pnpm -r run build",
+    "lint": "pnpm -r run lint"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
