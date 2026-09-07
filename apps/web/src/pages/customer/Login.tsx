@@ -260,13 +260,13 @@ export default function Login() {
           </form>
 
           {/* Security */}
-          <div className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#E9F7F6] px-4 py-3">
+          <div className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#FFF5F0] px-4 py-3">
             <ShieldCheck
               size={17}
-              className="text-[#087F7A]"
+              className="text-[#FF5A00]"
             />
 
-            <p className="text-[10px] font-medium text-[#087F7A]">
+            <p className="text-[10px] font-medium text-[#FF5A00]">
               Your account and personal information are secure
             </p>
           </div>
@@ -287,7 +287,7 @@ export default function Login() {
           >
             <Phone
               size={17}
-              className="text-[#087F7A]"
+              className="text-[#FF5A00]"
             />
             Login with OTP
           </button>

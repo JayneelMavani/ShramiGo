@@ -14,6 +14,7 @@ import {
   UserRound,
   Users,
   XCircle,
+  X,
 } from "lucide-react";
 import { BrandLogo } from "../../components/BrandLogo";
 import { getAdminStats, getAdminBookings, type AdminStats, type AdminBooking } from "../../services/admin";
@@ -25,6 +26,7 @@ export default function Dashboard() {
   const [recentBookings, setRecentBookings] = useState<AdminBooking[]>([]);
   const [loadingStats, setLoadingStats] = useState(true);
   const [loadError, setLoadError] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -125,10 +127,12 @@ export default function Dashboard() {
               </button>
 
               <button
-                className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20"
+                type="button"
+                onClick={() => setMenuOpen(true)}
+                className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-200 active:scale-95 group"
                 title="Menu"
               >
-                <Menu size={20} />
+                <Menu size={20} className="transition-transform duration-300 group-hover:rotate-90" />
               </button>
 
             </div>
@@ -492,6 +496,119 @@ export default function Dashboard() {
         </footer>
 
       </main>
+
+      {/* Admin Menu Drawer Overlay */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-50 flex">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 animate-fade-in"
+            onClick={() => setMenuOpen(false)}
+          />
+
+          {/* Drawer Content */}
+          <div className="relative ml-auto flex h-full w-full max-w-xs flex-col bg-white p-6 shadow-2xl z-10 animate-slide-in-right">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+              <div className="flex items-center gap-2">
+                <BrandLogo size="sm" />
+                <span className="font-bold text-gray-900">Admin Menu</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <nav className="mt-6 flex-1 space-y-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/admin");
+                }}
+                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
+              >
+                <TrendingUp size={18} className="text-[#087F7A]" />
+                Dashboard
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/admin/users");
+                }}
+                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
+              >
+                <Users size={18} className="text-[#087F7A]" />
+                Manage Users
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/admin/workers");
+                }}
+                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
+              >
+                <BriefcaseBusiness size={18} className="text-[#087F7A]" />
+                Manage Workers
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/admin/bookings");
+                }}
+                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
+              >
+                <ClipboardList size={18} className="text-[#FF5A00]" />
+                Bookings
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/admin/reports");
+                }}
+                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
+              >
+                <TrendingUp size={18} className="text-[#FF5A00]" />
+                Reports & Analytics
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/admin/notifications");
+                }}
+                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-[#087F7A]"
+              >
+                <Bell size={18} className="text-[#087F7A]" />
+                Notifications
+              </button>
+            </nav>
+
+            <div className="border-t border-gray-100 pt-4">
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50"
+              >
+                <LogOut size={18} />
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
